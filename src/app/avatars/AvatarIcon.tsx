@@ -19,6 +19,7 @@ export const AvatarIcon = () => {
   }
   return (
     <Box width="25%" sx={{ position: 'relative' }}>
+      {/* TODO: change to icon */}
       <img
         width="100%"
         style={{ cursor: 'pointer' }}
