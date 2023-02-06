@@ -4,6 +4,15 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { LandingPage } from './pages/LandingPage';
 import { LobbyPage } from './pages/LobbyPage';
 
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -16,5 +25,10 @@ const router = createBrowserRouter([
 ]);
 
 export const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <RouterProvider router={router} />
+    </ThemeProvider>
+  );
 };
