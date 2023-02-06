@@ -6,7 +6,7 @@ export const LobbyPage = () => {
   return (
     <h1>
       LobbyPage
-      <Link to="/">
+      <Link to="/" style={{ textDecoration: 'none' }}>
         <Button variant="contained">Go to landing page</Button>
       </Link>
     </h1>

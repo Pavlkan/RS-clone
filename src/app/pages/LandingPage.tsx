@@ -4,6 +4,7 @@ import PhoneMissedIcon from '@mui/icons-material/PhoneMissed';
 import { AvatarIcon } from '../avatars/AvatarIcon';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 
 export const LandingPage = () => {
@@ -46,9 +47,11 @@ export const LandingPage = () => {
             <TextField id="outlined-basic" label="Your name" variant="outlined" />
           </Box>
         </Box>
-        <Button variant="contained" startIcon={<PlayArrowRoundedIcon />}>
-          START
-        </Button>
+        <Link to="/lobby" style={{ textDecoration: 'none' }}>
+          <Button variant="contained" startIcon={<PlayArrowRoundedIcon />}>
+            START
+          </Button>
+        </Link>
       </Box>
       <Box sx={{ margin: '0 auto' }}>LINKS</Box>
     </Box>
