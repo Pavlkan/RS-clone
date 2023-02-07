@@ -19,7 +19,7 @@ export const LobbyPage = () => {
       }}
     >
       <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', alignItems: 'center' }}>
-        <Link to="/" style={{ textDecoration: 'none', justifySelf: 'center' }}>
+        <Link to="/landing" style={{ textDecoration: 'none', justifySelf: 'center' }}>
           <Button startIcon={<ArrowBackIosRoundedIcon />} variant="contained">
             BACK
           </Button>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createUser } from '../store/userSlice';
 import Box from '@mui/material/Box';
@@ -7,12 +7,21 @@ import { AvatarIcon } from '../avatars/AvatarIcon';
 import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
+import { useNavigate } from 'react-router-dom';
 
 export const LandingPage = () => {
+  const user = useSelector((state: any) => state.user.entity);
   const loading = useSelector((state: any) => state.user.loading);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [name, setName] = useState('');
   const [avatar, setAvatar] = useState('');
+
+  useEffect(() => {
+    if (user.id) {
+      navigate('/lobby');
+    }
+  }, [user.id, navigate]);
 
   return (
     <Box

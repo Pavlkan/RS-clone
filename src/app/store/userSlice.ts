@@ -1,5 +1,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
+export interface User {
+  id: string;
+  name: string;
+  avatar: string;
+}
+
+export interface UserState {
+  entity: User;
+  loading: boolean;
+}
+
 export const createUser = createAsyncThunk('user/createUser', async ({ name, avatar }: { name: string; avatar: string }) => {
   const response = await fetch('http://localhost:3001/api/users', {
     method: 'POST',
@@ -11,12 +22,14 @@ export const createUser = createAsyncThunk('user/createUser', async ({ name, ava
   return response.json();
 });
 
-export const userSlice = createSlice({
+export const userSlice = createSlice<UserState, any>({
   name: 'user',
   initialState: {
-    name: '',
-    avatar: '',
-    id: '',
+    entity: {
+      name: '',
+      avatar: '',
+      id: '',
+    },
     loading: false,
   },
   reducers: {},
@@ -29,9 +42,7 @@ export const userSlice = createSlice({
         state.loading = false;
 
         const { id, name, avatar } = action.payload;
-        state.id = id;
-        state.name = name;
-        state.avatar = avatar;
+        state.entity = { id, name, avatar };
       });
   },
 });
