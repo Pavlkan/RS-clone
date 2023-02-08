@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PhoneMissedIcon from '@mui/icons-material/PhoneMissed';
 import Box from '@mui/material/Box';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import VolumeUpRoundedIcon from '@mui/icons-material/VolumeUpRounded';
+// import { PlayersList } from '../components/PlayersList';
+import { PlayersBox } from '../components/PlayersBox';
+import { PlayerProps } from '../components/PlayerListItem';
+
+// TODO:replace by real data
+const dummyPlayers = [
+  { name: 'Alex', isOwner: true, avatarId: 0 },
+  { name: 'John', isOwner: false, avatarId: 1 },
+  { name: 'Tad', isOwner: false, avatarId: 2 },
+];
 
 export const LobbyPage = () => {
+  const [players, setPlayers] = useState<Array<PlayerProps>>(dummyPlayers);
+  const handlePlayerDelete = (playerId: string) => {
+    // TODO: change logic for real api
+    const filteredPlayers = players.filter(({ name }) => name !== playerId);
+    setPlayers(filteredPlayers);
+  };
+
   return (
     <Box
       sx={{
@@ -36,10 +53,8 @@ export const LobbyPage = () => {
           gap: '10%',
         }}
       >
-        <Box>
-          <h1>Players</h1>
-          {/* TODO: players options element and player card */}
-        </Box>
+        <PlayersBox players={players} onPlayerDelete={handlePlayerDelete} />
+
         <Box>
           <h1>Settings and presets</h1>
           {/* TODO: players options element and player card */}
