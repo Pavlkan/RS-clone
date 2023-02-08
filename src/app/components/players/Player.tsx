@@ -4,15 +4,7 @@ import Box from '@mui/material/Box';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 
-export const Player = (props: { user: User; isOwner: boolean }) => {
-  const createAvatar = () => {
-    if (props.user.name !== 'Empty') {
-      return <img style={{ margin: '0.5vw', width: '4vw' }} src={props.user.avatar} alt={props.user.avatar} />;
-    } else {
-      return <AccountCircleIcon style={{ margin: '0.5vw', fontSize: '4vw' }}></AccountCircleIcon>;
-    }
-  };
-
+export const Player = ({ user, isOwner }: { user: User | undefined; isOwner: boolean }) => {
   return (
     <Box
       sx={{
@@ -25,9 +17,11 @@ export const Player = (props: { user: User; isOwner: boolean }) => {
         borderRadius: '6vw 1vw 1vw 6vw',
       }}
     >
-      {createAvatar()}
-      <p style={{ margin: '0' }}>{props.user.name}</p>
-      {props.isOwner && <StarBorderIcon />}
+      {(user && <img style={{ margin: '0.5vw', width: '4vw' }} src={user.avatar} alt={user.avatar} />) || (
+        <AccountCircleIcon style={{ margin: '0.5vw', fontSize: '4vw' }} />
+      )}
+      <p style={{ margin: '0' }}>{user?.name ?? 'Empty'}</p>
+      {isOwner && <StarBorderIcon />}
     </Box>
   );
 };

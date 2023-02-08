@@ -1,32 +1,24 @@
 import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
-import { AppState } from '../../store/store';
-import { PlayersAmountOptions } from './PlayersAmountOptions';
+
+import { PlayersLimitOption } from './PlayersLimitOption';
 import { Player } from './Player';
+import { selectLobby, selectUser } from '../../store/selectors';
 
 export const Players = () => {
-  const lobby = useSelector((state: AppState) => state.lobby);
+  const lobby = useSelector(selectLobby);
+  const user = useSelector(selectUser);
+  const [playersLimit, setPlayersLimit] = useState(14);
 
-  const [playersAmount, setPlayersAmount] = useState(14);
+  const isOwner = lobby.owner.id === user.id;
 
   const handlePlayersAmountChange = useCallback(
     (playersAmount: number) => {
-      setPlayersAmount(playersAmount);
+      setPlayersLimit(playersAmount);
     },
-    [setPlayersAmount],
+    [setPlayersLimit],
   );
-
-  const createPlayers = () => {
-    const lobbyPlayers = lobby.players;
-    const allPlayers: JSX.Element[] = [];
-    for (let i = 0; i < playersAmount; i++) {
-      const user = lobbyPlayers[i] ? lobbyPlayers[i] : { id: `${i}`, name: 'Empty', avatar: '' };
-      const isOwner = lobby.owner.id === user.id;
-      allPlayers.push(<Player user={user} isOwner={isOwner} key={user.id}></Player>);
-    }
-    return allPlayers;
-  };
 
   return (
     <Box
@@ -40,10 +32,10 @@ export const Players = () => {
       }}
     >
       <h2>
-        PLAYERS {lobby.players.length}/{playersAmount}
+        PLAYERS {lobby.players.length}/{playersLimit}
       </h2>
 
-      <PlayersAmountOptions minAmountOfPlayers={lobby.players.length} onPlayersAmountChange={handlePlayersAmountChange} />
+      {isOwner && <PlayersLimitOption minAmountOfPlayers={lobby.players.length} onPlayersAmountChange={handlePlayersAmountChange} />}
 
       <Box
         sx={{
@@ -55,7 +47,10 @@ export const Players = () => {
           alignItems: 'center',
         }}
       >
-        {createPlayers().map(player => player)}
+        {Array.from({ ...lobby.players, length: playersLimit }).map((option, i) => {
+          const isOwner = option?.id === lobby.owner.id;
+          return <Player user={option} isOwner={isOwner} key={option?.id ?? i}></Player>;
+        })}
       </Box>
     </Box>
   );

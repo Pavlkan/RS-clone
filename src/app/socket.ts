@@ -1,10 +1,15 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { AppState } from './store/store';
+
+import { selectUser } from './store/selectors';
+import { User } from './store/userSlice';
+import { AppDispatch } from './store/store';
+import { addPlayer, removePlayer } from './store/lobbySlice';
 
 export function useSocket() {
-  const user = useSelector((state: AppState) => state.user.entity);
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch<AppDispatch>();
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
@@ -16,10 +21,22 @@ export function useSocket() {
       setSocket(instance);
     });
 
+    instance.on('PlayerJoinedLobby', (player: User) => {
+      dispatch(addPlayer(player));
+    });
+
+    instance.on('PlayerLeftLobby', (player: User) => {
+      dispatch(removePlayer(player));
+    });
+
+    instance.on('PlayerLeftLobby', (player: User) => {
+      dispatch(removePlayer(player));
+    });
+
     return () => {
-      instance.off('connect');
+      instance.disconnect();
     };
-  }, [user, setSocket]);
+  }, [user, setSocket, dispatch]);
 
   return socket;
 }
