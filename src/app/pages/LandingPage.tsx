@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createUser } from '../store/userSlice';
 import Box from '@mui/material/Box';
 import PhoneMissedIcon from '@mui/icons-material/PhoneMissed';
-import { AvatarIcon } from '../avatars/AvatarIcon';
+import { AvatarIcon } from '../components/avatar/AvatarIcon';
 import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';

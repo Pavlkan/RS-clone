@@ -1,5 +1,5 @@
 import React from 'react';
-import { User } from '../../app/store/userSlice';
+import { User } from '../../store/userSlice';
 import Box from '@mui/material/Box';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import StarBorderIcon from '@mui/icons-material/StarBorder';

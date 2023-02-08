@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
-import { AppState } from '../../app/store/store';
+import { AppState } from '../../store/store';
 import { PlayersAmountOptions } from './PlayersAmountOptions';
 import { Player } from './Player';
 

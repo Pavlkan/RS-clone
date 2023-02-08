@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import VolumeUpRoundedIcon from '@mui/icons-material/VolumeUpRounded';
-import { Players } from '../../components/players/Players';
+import { Players } from '../components/players/Players';
 
 export const LobbyPage = () => {
   return (

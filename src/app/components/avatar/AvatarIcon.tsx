@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { avatarIcons } from './AvatarIconsRepo';
 import NextPlanRoundedIcon from '@mui/icons-material/NextPlanRounded';
 import Box from '@mui/material/Box';
+
+import { avatarIcons } from './icons';
 
 export interface AvatarIconInterface {
   currentAvatar: number;
