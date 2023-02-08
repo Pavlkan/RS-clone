@@ -1,11 +1,12 @@
 import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
 import { LandingPage } from './pages/LandingPage';
 import { LobbyPage } from './pages/LobbyPage';
-
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
+import { GameProcessPage } from './pages/GameProcessPage';
+import { GamePage } from './pages/GamePage';
 
 const darkTheme = createTheme({
   palette: {
@@ -13,22 +14,21 @@ const darkTheme = createTheme({
   },
 });
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <LandingPage />,
-  },
-  {
-    path: '/lobby',
-    element: <LobbyPage />,
-  },
-]);
-
 export const App = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <RouterProvider router={router} />
+
+      <BrowserRouter>
+        <Routes>
+          <Route path="/landing" element={<LandingPage />} />
+          <Route path="/" element={<Navigate to="/landing" />} />
+          <Route path="/" element={<GameProcessPage />}>
+            <Route path="/lobby" element={<LobbyPage />} />
+            <Route path="/game" element={<GamePage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   );
 };

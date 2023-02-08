@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { avatarIcons } from './AvatarIconsRepo';
 import NextPlanRoundedIcon from '@mui/icons-material/NextPlanRounded';
 import Box from '@mui/material/Box';
@@ -7,7 +7,11 @@ export interface AvatarIconInterface {
   currentAvatar: number;
 }
 
-export const AvatarIcon = () => {
+export interface AvatarIconProps {
+  onChange: (avatar: string) => void;
+}
+
+export const AvatarIcon = ({ onChange }: AvatarIconProps) => {
   const [currentAvatar, setCurrentAvatar] = useState(0);
   function avatarChange() {
     const avatarsAmount = avatarIcons.length - 1;
@@ -17,6 +21,11 @@ export const AvatarIcon = () => {
       setCurrentAvatar(currentAvatar + 1);
     }
   }
+
+  useEffect(() => {
+    onChange(avatarIcons[currentAvatar].img);
+  }, [currentAvatar, onChange]);
+
   return (
     <Box width="25%" sx={{ position: 'relative' }}>
       {/* TODO: change to icon */}
