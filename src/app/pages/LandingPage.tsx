@@ -8,11 +8,12 @@ import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 import { useNavigate } from 'react-router-dom';
+import { AppDispatch, AppState } from '../store/store';
 
 export const LandingPage = () => {
-  const user = useSelector((state: any) => state.user.entity);
-  const loading = useSelector((state: any) => state.user.loading);
-  const dispatch = useDispatch();
+  const user = useSelector((state: AppState) => state.user.entity);
+  const loading = useSelector((state: AppState) => state.user.loading);
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [avatar, setAvatar] = useState('');
@@ -59,14 +60,14 @@ export const LandingPage = () => {
             autoComplete="off"
           >
             <h2 style={{ textAlign: 'center' }}>CHOOSE A CHARACTER AND A NICKNAME</h2>
-            <TextField id="outlined-basic" label="Your name" variant="outlined" onChange={event => setName((event.target as any).value)} />
+            <TextField id="outlined-basic" label="Your name" variant="outlined" onChange={event => setName(event.target.value)} />
           </Box>
         </Box>
         <LoadingButton
           variant="contained"
           loading={loading}
           startIcon={<PlayArrowRoundedIcon />}
-          onClick={() => dispatch(createUser({ name, avatar }) as any)}
+          onClick={() => dispatch(createUser({ name, avatar }))}
         >
           START
         </LoadingButton>

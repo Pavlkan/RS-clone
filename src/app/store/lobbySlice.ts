@@ -1,14 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+// eslint-disable-next-line import/named
+import { createSlice, SliceCaseReducers, PayloadAction } from '@reduxjs/toolkit';
 import { User } from './userSlice';
 
-export interface Lobby {
+export interface LobbyState {
   id: string;
   owner: User;
   players: User[];
   playersLimit: number;
 }
 
-export const lobbySlice = createSlice<Lobby, any>({
+export const lobbySlice = createSlice<LobbyState, SliceCaseReducers<LobbyState>>({
   name: 'lobby',
   initialState: {
     id: '',
@@ -17,16 +18,16 @@ export const lobbySlice = createSlice<Lobby, any>({
     playersLimit: 0,
   },
   reducers: {
-    setLobby: (state: any, action: any) => {
+    setLobby: (lobbyState: LobbyState, action: PayloadAction<LobbyState>) => {
       const lobby = action.payload;
-      state.id = lobby.id;
-      state.owner = lobby.owner;
-      state.players = lobby.players;
-      state.playersLimit = lobby.playersLimit;
+      lobbyState.id = lobby.id;
+      lobbyState.owner = lobby.owner;
+      lobbyState.players = lobby.players;
+      lobbyState.playersLimit = lobby.playersLimit;
     },
   },
 });
 
-export const { setLobby } = lobbySlice.actions as any;
+export const { setLobby } = lobbySlice.actions;
 
 export default lobbySlice.reducer;

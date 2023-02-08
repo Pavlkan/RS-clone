@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import VolumeUpRoundedIcon from '@mui/icons-material/VolumeUpRounded';
+import { Players } from '../../components/players/Players';
 
 export const LobbyPage = () => {
   return (
@@ -14,7 +15,7 @@ export const LobbyPage = () => {
         gridTemplateRows: 'auto 1fr',
         gridTemplateColumns: '90%',
         justifyContent: 'center',
-        gap: '20%',
+        gap: '10%',
         minHeight: '100vh',
       }}
     >
@@ -37,8 +38,7 @@ export const LobbyPage = () => {
         }}
       >
         <Box>
-          <h1>Players</h1>
-          {/* TODO: players options element and player card */}
+          <Players></Players>
         </Box>
         <Box>
           <h1>Settings and presets</h1>

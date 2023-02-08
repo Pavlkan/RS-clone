@@ -4,7 +4,7 @@ import { Socket } from 'socket.io-client';
 import { useDispatch } from 'react-redux';
 
 import { useSocket } from '../socket';
-import { Lobby, setLobby } from '../store/lobbySlice';
+import { LobbyState, setLobby } from '../store/lobbySlice';
 
 export const SocketContext = React.createContext<Socket | null>(null);
 
@@ -13,7 +13,7 @@ export const GameProcessPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    socket?.emit('lobby:create', (lobby: Lobby) => {
+    socket?.emit('lobby:create', (lobby: LobbyState) => {
       dispatch(setLobby(lobby));
     });
   }, [socket, dispatch]);

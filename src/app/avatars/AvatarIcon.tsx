@@ -23,7 +23,7 @@ export const AvatarIcon = ({ onChange }: AvatarIconProps) => {
   }
 
   useEffect(() => {
-    onChange(avatarIcons[currentAvatar].title);
+    onChange(avatarIcons[currentAvatar].img);
   }, [currentAvatar, onChange]);
 
   return (

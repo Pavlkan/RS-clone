@@ -1,9 +1,10 @@
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
+import { AppState } from './store/store';
 
 export function useSocket() {
-  const user = useSelector((state: any) => state.user.entity);
+  const user = useSelector((state: AppState) => state.user.entity);
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {

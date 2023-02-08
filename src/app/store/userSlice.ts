@@ -1,4 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+// eslint-disable-next-line import/named
+import { createSlice, createAsyncThunk, SliceCaseReducers } from '@reduxjs/toolkit';
 
 export interface User {
   id: string;
@@ -22,7 +23,7 @@ export const createUser = createAsyncThunk('user/createUser', async ({ name, ava
   return response.json();
 });
 
-export const userSlice = createSlice<UserState, any>({
+export const userSlice = createSlice<UserState, SliceCaseReducers<UserState>>({
   name: 'user',
   initialState: {
     entity: {

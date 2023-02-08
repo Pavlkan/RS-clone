@@ -1,10 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './userSlice';
-import lobbyReducer from './lobbySlice';
+import userReducer, { UserState } from './userSlice';
+import lobbyReducer, { LobbyState } from './lobbySlice';
 
-export default configureStore({
+export interface AppState {
+  user: UserState;
+  lobby: LobbyState;
+}
+
+export const store = configureStore({
   reducer: {
     user: userReducer,
     lobby: lobbyReducer,
   },
 });
+
+export type AppDispatch = typeof store.dispatch;
