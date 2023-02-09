@@ -1,5 +1,5 @@
-import Avatar0 from './assets/Avatar_0.svg';
-import Avatar1 from './assets/Avatar_1.svg';
+import Avatar0 from '../../../assets/Avatar_0.svg';
+import Avatar1 from '../../../assets/Avatar_1.svg';
 
 export const avatarIcons = [
   {
