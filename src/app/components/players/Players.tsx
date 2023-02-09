@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 
 import { PlayersLimitOption } from './PlayersLimitOption';
-import { Player } from './Player';
+import { Player } from './player-list-item/Player';
 import { selectLobby, selectUser } from '../../store/selectors';
 
 export const Players = () => {
