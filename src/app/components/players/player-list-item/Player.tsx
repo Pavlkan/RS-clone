@@ -6,7 +6,12 @@ import StarIcon from '@mui/icons-material/Star';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import { playerListItemStyles } from './styles';
 
-export const Player = ({ user, isOwner }: { user: User | undefined; isOwner: boolean }) => {
+interface PlayerProps {
+  user: User | undefined;
+  isOwner: boolean;
+}
+
+export const Player = ({ user, isOwner }: PlayerProps) => {
   const endIcon = isOwner ? (
     <IconButton edge="end" disabled>
       <StarIcon />
