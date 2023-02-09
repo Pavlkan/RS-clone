@@ -10,8 +10,7 @@ import Stack from '@mui/material/Stack';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 import LinkIcon from '@mui/icons-material/Link';
 import Snackbar from '@mui/material/Snackbar';
-
-import { Players } from '../components/players/Players';
+import { PlayersBox } from '../components/players/players-box/PlayersBox';
 import { selectIsOwner, selectLobby } from '../store/selectors';
 
 export const LobbyPage = () => {
@@ -57,7 +56,7 @@ export const LobbyPage = () => {
           }}
         >
           <Box>
-            <Players />
+            <PlayersBox />
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             {isOwner && <h1>Settings and presets</h1>}
