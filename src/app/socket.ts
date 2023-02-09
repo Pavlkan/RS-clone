@@ -6,6 +6,7 @@ import { selectUser } from './store/selectors';
 import { User } from './store/userSlice';
 import { AppDispatch } from './store/store';
 import { addPlayer, removePlayer } from './store/lobbySlice';
+import { Game, setGame } from './store/gameSlice';
 
 export function useSocket() {
   const user = useSelector(selectUser);
@@ -31,6 +32,10 @@ export function useSocket() {
 
     instance.on('PlayerLeftLobby', (player: User) => {
       dispatch(removePlayer(player));
+    });
+
+    instance.on('GameStarted', (game: Game) => {
+      dispatch(setGame(game));
     });
 
     return () => {
