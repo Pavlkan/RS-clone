@@ -10,7 +10,6 @@ import Stack from '@mui/material/Stack';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 import LinkIcon from '@mui/icons-material/Link';
 import Snackbar from '@mui/material/Snackbar';
-
 import { PlayersBox } from '../components/players/players-box/PlayersBox';
 import { selectIsOwner, selectLobby } from '../store/selectors';
 
