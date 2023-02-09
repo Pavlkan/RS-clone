@@ -6,9 +6,10 @@ import { Provider } from 'react-redux';
 
 import { LandingPage } from './pages/LandingPage';
 import { LobbyPage } from './pages/LobbyPage';
-import { GameProcessPage } from './pages/GameProcessPage';
+import { GameProcessor } from './GameProcessor';
 import { GamePage } from './pages/GamePage';
 import { store } from './store/store';
+import { SocketProvider } from './socket/SocketProvider';
 
 const darkTheme = createTheme({
   palette: {
@@ -26,7 +27,14 @@ export const App = () => {
           <Routes>
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/" element={<Navigate to="/landing" />} />
-            <Route path="/" element={<GameProcessPage />}>
+            <Route
+              path="/"
+              element={
+                <SocketProvider>
+                  <GameProcessor />
+                </SocketProvider>
+              }
+            >
               <Route path="/lobby" element={<LobbyPage />} />
               <Route path="/game" element={<GamePage />} />
             </Route>

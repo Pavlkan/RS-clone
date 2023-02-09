@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import PhoneMissedIcon from '@mui/icons-material/PhoneMissed';
 import Box from '@mui/material/Box';
@@ -13,14 +13,14 @@ import Snackbar from '@mui/material/Snackbar';
 
 import { PlayersBox } from '../components/players/players-box/PlayersBox';
 import { selectGame, selectIsOwner, selectLobby } from '../store/selectors';
-import { SocketContext } from './GameProcessPage';
+import { useSocket } from '../socket/useSocket';
 
 export const LobbyPage = () => {
   const [shown, setShown] = useState(false);
   const lobby = useSelector(selectLobby);
   const game = useSelector(selectGame);
   const isOwner = useSelector(selectIsOwner);
-  const socket = useContext(SocketContext);
+  const socket = useSocket();
   const navigate = useNavigate();
 
   useEffect(() => {
