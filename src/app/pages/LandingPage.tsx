@@ -27,7 +27,7 @@ export const LandingPage = () => {
     if (user.id) {
       navigate({ pathname: '/lobby', search: searchParams.toString() });
     }
-  }, [user.id, navigate, searchParams]);
+  }, [user.id, searchParams]);
 
   return (
     <Box

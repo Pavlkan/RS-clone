@@ -29,7 +29,7 @@ export const LobbyPage = () => {
     if (game.id) {
       navigate('/game');
     }
-  }, [game.id, navigate]);
+  }, [game.id]);
 
   const onSnackbarClose = useCallback(() => setShown(false), [setShown]);
 

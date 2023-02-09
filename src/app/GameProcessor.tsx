@@ -45,7 +45,7 @@ export const GameProcessor = () => {
         dispatch(setLobby(lobby));
       });
     }
-  }, [socket, dispatch, navigate]);
+  }, [socket, dispatch]);
 
   return (
     <SocketProvider>
