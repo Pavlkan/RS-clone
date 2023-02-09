@@ -25,9 +25,16 @@ export const lobbySlice = createSlice<LobbyState, SliceCaseReducers<LobbyState>>
       lobbyState.players = lobby.players;
       lobbyState.playersLimit = lobby.playersLimit;
     },
+    addPlayer: (lobbyState: LobbyState, action: PayloadAction<User>) => {
+      lobbyState.players.push(action.payload);
+    },
+    removePlayer: (lobbyState: LobbyState, action: PayloadAction<User>) => {
+      const index = lobbyState.players.findIndex(player => player.id === action.payload.id);
+      if (index !== -1) lobbyState.players.splice(index, 1);
+    },
   },
 });
 
-export const { setLobby } = lobbySlice.actions;
+export const { setLobby, addPlayer, removePlayer } = lobbySlice.actions;
 
 export default lobbySlice.reducer;

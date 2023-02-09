@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { avatarIcons } from './AvatarIconsRepo';
 import NextPlanRoundedIcon from '@mui/icons-material/NextPlanRounded';
 import Box from '@mui/material/Box';
+
+import { avatarIcons } from './icons';
 
 export interface AvatarIconInterface {
   currentAvatar: number;
@@ -28,7 +29,6 @@ export const AvatarIcon = ({ onChange }: AvatarIconProps) => {
 
   return (
     <Box width="25%" sx={{ position: 'relative' }}>
-      {/* TODO: change to icon */}
       <img
         width="100%"
         style={{ cursor: 'pointer' }}

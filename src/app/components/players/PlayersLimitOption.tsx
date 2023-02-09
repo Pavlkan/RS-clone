@@ -8,7 +8,7 @@ export interface PlayersAmountOptionsInterface {
   onPlayersAmountChange: (amount: number) => void;
 }
 
-export const PlayersAmountOptions = (props: PlayersAmountOptionsInterface) => {
+export const PlayersLimitOption = (props: PlayersAmountOptionsInterface) => {
   const minAmountOfPlayers = props.minAmountOfPlayers >= 4 ? props.minAmountOfPlayers : 4;
   const maxAmountOfPlayers = 20;
   const initialAmountOfPlayers = 14;

@@ -3,26 +3,30 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createUser } from '../store/userSlice';
 import Box from '@mui/material/Box';
 import PhoneMissedIcon from '@mui/icons-material/PhoneMissed';
-import { AvatarIcon } from '../avatars/AvatarIcon';
+import { AvatarIcon } from '../components/avatar/AvatarIcon';
 import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
-import { useNavigate } from 'react-router-dom';
-import { AppDispatch, AppState } from '../store/store';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { AppDispatch } from '../store/store';
+import { selectIsUserLoading, selectUser } from '../store/selectors';
 
 export const LandingPage = () => {
-  const user = useSelector((state: AppState) => state.user.entity);
-  const loading = useSelector((state: AppState) => state.user.loading);
+  const user = useSelector(selectUser);
+  const loading = useSelector(selectIsUserLoading);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [name, setName] = useState('');
   const [avatar, setAvatar] = useState('');
 
+  const isInvite = !!searchParams.get('lobby');
+
   useEffect(() => {
     if (user.id) {
-      navigate('/lobby');
+      navigate({ pathname: '/lobby', search: searchParams.toString() });
     }
-  }, [user.id, navigate]);
+  }, [user.id, navigate, searchParams]);
 
   return (
     <Box
@@ -69,7 +73,7 @@ export const LandingPage = () => {
           startIcon={<PlayArrowRoundedIcon />}
           onClick={() => dispatch(createUser({ name, avatar }))}
         >
-          START
+          {isInvite ? 'JOIN' : 'START'}
         </LoadingButton>
       </Box>
       <Box sx={{ margin: '0 auto' }}>LINKS</Box>
