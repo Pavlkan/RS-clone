@@ -21,6 +21,7 @@ export const LandingPage = () => {
   const [avatar, setAvatar] = useState('');
 
   const isInvite = !!searchParams.get('lobby');
+  const disabled = !name || !avatar;
 
   useEffect(() => {
     if (user.id) {
@@ -70,6 +71,7 @@ export const LandingPage = () => {
         <LoadingButton
           variant="contained"
           loading={loading}
+          disabled={disabled}
           startIcon={<PlayArrowRoundedIcon />}
           onClick={() => dispatch(createUser({ name, avatar }))}
         >

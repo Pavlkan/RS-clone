@@ -4,15 +4,13 @@ import { Box, List } from '@mui/material';
 
 import { PlayersLimitSelect } from '../players-limit-select/PlayersLimitSelect';
 import { Player } from '../player-list-item/Player';
-import { selectLobby, selectUser } from '../../../store/selectors';
+import { selectIsOwner, selectLobby } from '../../../store/selectors';
 import { playersContainer, playersList } from './styles';
 
 export const PlayersBox = () => {
   const lobby = useSelector(selectLobby);
-  const user = useSelector(selectUser);
+  const isOwner = useSelector(selectIsOwner);
   const [playersLimit, setPlayersLimit] = useState(14);
-
-  const isOwner = lobby.owner.id === user.id;
 
   const handlePlayersAmountChange = useCallback(
     (playersAmount: number) => {

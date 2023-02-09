@@ -23,17 +23,21 @@ export const createUser = createAsyncThunk('user/createUser', async ({ name, ava
   return response.json();
 });
 
+const initialState: UserState = {
+  entity: {
+    name: '',
+    avatar: '',
+    id: '',
+  },
+  loading: false,
+};
+
 export const userSlice = createSlice<UserState, SliceCaseReducers<UserState>>({
   name: 'user',
-  initialState: {
-    entity: {
-      name: '',
-      avatar: '',
-      id: '',
-    },
-    loading: false,
+  initialState,
+  reducers: {
+    resetUser: () => initialState,
   },
-  reducers: {},
   extraReducers: builder => {
     builder
       .addCase(createUser.pending, state => {
@@ -47,5 +51,7 @@ export const userSlice = createSlice<UserState, SliceCaseReducers<UserState>>({
       });
   },
 });
+
+export const { resetUser } = userSlice.actions;
 
 export default userSlice.reducer;
