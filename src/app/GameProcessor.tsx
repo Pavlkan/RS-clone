@@ -6,7 +6,6 @@ import { useSocket } from './socket/useSocket';
 import { addPlayer, LobbyState, removePlayer, setLobby } from './store/lobbySlice';
 import { User } from './store/userSlice';
 import { Game, setGame } from './store/gameSlice';
-import { SocketProvider } from './socket/SocketProvider';
 
 export const GameProcessor = () => {
   const socket = useSocket();
@@ -47,9 +46,5 @@ export const GameProcessor = () => {
     }
   }, [socket, dispatch]);
 
-  return (
-    <SocketProvider>
-      <Outlet />
-    </SocketProvider>
-  );
+  return <Outlet />;
 };
