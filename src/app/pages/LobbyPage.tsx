@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PhoneMissedIcon from '@mui/icons-material/PhoneMissed';
 import Box from '@mui/material/Box';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import VolumeUpRoundedIcon from '@mui/icons-material/VolumeUpRounded';
@@ -14,6 +14,7 @@ import Snackbar from '@mui/material/Snackbar';
 import { PlayersBox } from '../components/players/players-box/PlayersBox';
 import { selectGame, selectIsOwner, selectLobby } from '../store/selectors';
 import { useSocket } from '../socket/useSocket';
+import { resetUser } from '../store/userSlice';
 
 export const LobbyPage = () => {
   const [shown, setShown] = useState(false);
@@ -22,6 +23,7 @@ export const LobbyPage = () => {
   const isOwner = useSelector(selectIsOwner);
   const socket = useSocket();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (game.id) {
@@ -43,6 +45,11 @@ export const LobbyPage = () => {
     }
   }, [socket, isOwner]);
 
+  const onBackClick = useCallback(() => {
+    dispatch(resetUser(null));
+    navigate('/landing');
+  }, [dispatch, navigate]);
+
   return (
     <>
       <Box
@@ -56,11 +63,14 @@ export const LobbyPage = () => {
         }}
       >
         <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', alignItems: 'center' }}>
-          <Link to="/landing" style={{ textDecoration: 'none', justifySelf: 'center' }}>
-            <Button startIcon={<ArrowBackIosRoundedIcon />} variant="contained">
-              BACK
-            </Button>
-          </Link>
+          <Button
+            sx={{ textDecoration: 'none', justifySelf: 'center' }}
+            startIcon={<ArrowBackIosRoundedIcon />}
+            variant="contained"
+            onClick={onBackClick}
+          >
+            BACK
+          </Button>
           <PhoneMissedIcon sx={{ justifySelf: 'center' }} />
           {/* TODO: sound component with onClick */}
           <VolumeUpRoundedIcon sx={{ justifySelf: 'center' }} />
