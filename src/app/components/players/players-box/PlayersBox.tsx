@@ -31,8 +31,8 @@ export const PlayersBox = () => {
 
       <List sx={playersList}>
         {Array.from({ ...lobby.players, length: playersLimit }).map((option, i) => {
-          const isOwner = option?.id === lobby.owner.id;
-          return <Player user={option} isOwner={isOwner} key={option?.id ?? i}></Player>;
+          const isOwnerPlayerItem = option?.id === lobby.owner.id;
+          return <Player user={option} isOwnerPlayerItem={isOwnerPlayerItem} isOwner={Boolean(isOwner)} key={option?.id ?? i}></Player>;
         })}
       </List>
     </Box>

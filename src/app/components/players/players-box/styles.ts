@@ -9,7 +9,7 @@ export const playersContainer = {
 
 export const playersList = {
   width: '100%',
-  height: '53vh',
+  height: '50vh',
   overflow: 'auto',
   display: 'flex',
   flexDirection: 'column',

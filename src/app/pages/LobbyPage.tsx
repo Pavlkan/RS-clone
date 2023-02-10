@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PhoneMissedIcon from '@mui/icons-material/PhoneMissed';
 import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
@@ -15,6 +14,7 @@ import { PlayersBox } from '../components/players/players-box/PlayersBox';
 import { selectGame, selectIsOwner, selectLobby } from '../store/selectors';
 import { useSocket } from '../socket/useSocket';
 import { resetUser } from '../store/userSlice';
+import GarticPhone from '../../assets/Garticphone.webp';
 
 export const LobbyPage = () => {
   const [shown, setShown] = useState(false);
@@ -55,9 +55,10 @@ export const LobbyPage = () => {
       <Box
         // TODO: move style to separate file
         sx={{
+          padding: '2%',
           display: 'grid',
           gridTemplateRows: 'auto 1fr',
-          gridTemplateColumns: '90%',
+          gridTemplateColumns: '95%',
           justifyContent: 'center',
           gap: '10%',
           minHeight: '100vh',
@@ -72,7 +73,7 @@ export const LobbyPage = () => {
           >
             BACK
           </Button>
-          <PhoneMissedIcon sx={{ justifySelf: 'center' }} />
+          <img src={GarticPhone} width="35%" style={{ justifySelf: 'center' }} alt="GarticPhone" />
           {/* TODO: sound component with onClick */}
           <VolumeUpRoundedIcon sx={{ justifySelf: 'center' }} />
         </Box>

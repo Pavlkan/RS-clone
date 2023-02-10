@@ -18,6 +18,7 @@ export const WritingPhase = (props: WritingPhaseProps) => {
   return (
     <Box
       sx={{
+        padding: '2%',
         display: 'grid',
         gridTemplateRows: 'auto 1fr',
         gridTemplateColumns: '90%',
@@ -30,7 +31,7 @@ export const WritingPhase = (props: WritingPhaseProps) => {
         <Typography variant="h6" component="div" align="center">
           {props.currentPhase}/{props.phaseAmount}
         </Typography>
-        <img src={Garticphone} width="40%" style={{ justifySelf: 'center' }} alt="Garticphone" />
+        <img src={Garticphone} width="37%" style={{ justifySelf: 'center' }} alt="Garticphone" />
         {/* TODO: sound component with onClick */}
         <TimelapseRoundedIcon sx={{ justifySelf: 'center' }} />
       </Box>
