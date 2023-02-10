@@ -1,22 +1,22 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Box, TextField, Snackbar } from '@mui/material';
+import { Box, TextField, Snackbar, Alert } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import LoadingButton from '@mui/lab/LoadingButton';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { AvatarIcon } from '../components/avatar/AvatarIcon';
 import { createUser } from '../store/userSlice';
 import { AppDispatch } from '../store/store';
-import { selectIsUserLoading, selectUser } from '../store/selectors';
+import { selectIsExpelled, selectIsUserLoading, selectUser } from '../store/selectors';
 import GarticPhone from '../../assets/Garticphone.webp';
 
 export const LandingPage = () => {
   const user = useSelector(selectUser);
   const loading = useSelector(selectIsUserLoading);
+  const isExpelled = useSelector(selectIsExpelled);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const location = useLocation();
   const [searchParams] = useSearchParams();
   const [name, setName] = useState('');
   const [avatar, setAvatar] = useState('');
@@ -28,16 +28,17 @@ export const LandingPage = () => {
   const onSnackbarClose = useCallback(() => setExpelledPopupShown(false), [setExpelledPopupShown]);
 
   useEffect(() => {
-    if (user.id) {
+    if (user.id && !isExpelled) {
       navigate({ pathname: '/lobby', search: searchParams.toString() });
     }
   }, [user.id, searchParams]);
 
   useEffect(() => {
-    if (location.state?.expelled) {
+    if (isExpelled) {
       setExpelledPopupShown(true);
+      dispatch({ type: 'reset' });
     }
-  }, [setExpelledPopupShown]);
+  }, [setExpelledPopupShown, isExpelled, dispatch]);
 
   return (
     <>
@@ -95,11 +96,12 @@ export const LandingPage = () => {
 
       <Snackbar
         open={expelledPopupShown}
-        autoHideDuration={1500}
+        autoHideDuration={3500}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         onClose={onSnackbarClose}
-        message="You have been expelled :("
-      />
+      >
+        <Alert severity="error">You have been expelled :(</Alert>
+      </Snackbar>
     </>
   );
 };
