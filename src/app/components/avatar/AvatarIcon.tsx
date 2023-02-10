@@ -9,8 +9,8 @@ export interface AvatarIconProps {
 }
 
 export const AvatarIcon = ({ onChange }: AvatarIconProps) => {
-  const randomAvatarIndex = Math.floor(Math.random() * (avatarIcons.length - 1));
-  const [avatarIndex, setAvatarIndex] = useState(randomAvatarIndex);
+  const randomAvatarIndex = Math.floor(Math.random() * avatarIcons.length);
+  const [avatarIndex, setAvatarIndex] = useState(randomAvatarIndex ?? 0);
 
   const changeAvatar = useCallback(() => {
     const next = (avatarIndex + 1) % avatarIcons.length;
