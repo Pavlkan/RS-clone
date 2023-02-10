@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useSocket } from './socket/useSocket';
 import { addPlayer, LobbyState, removePlayer, setLobby } from './store/lobbySlice';
 import { User } from './store/userSlice';
 import { completeGame, Game, nextRound, Round, setGame } from './store/gameSlice';
+import { selectUser } from './store/selectors';
 
 export const GameProcessor = () => {
   const socket = useSocket();
+  const currentUser = useSelector(selectUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -22,7 +24,12 @@ export const GameProcessor = () => {
     });
 
     socket?.on('PlayerWasExpelled', (player: User) => {
-      dispatch(removePlayer(player));
+      if (currentUser.id === player.id) {
+        dispatch({ type: 'reset' });
+        navigate('/landing', { state: { expelled: true } });
+      } else {
+        dispatch(removePlayer(player));
+      }
     });
 
     socket?.on('GameStarted', (game: Game) => {
