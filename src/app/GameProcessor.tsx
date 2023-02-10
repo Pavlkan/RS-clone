@@ -5,8 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useSocket } from './socket/useSocket';
 import { addPlayer, LobbyState, removePlayer, setLobby } from './store/lobbySlice';
 import { User } from './store/userSlice';
-import { Game, setGame } from './store/gameSlice';
-import { SocketProvider } from './socket/SocketProvider';
+import { completeGame, Game, nextRound, Round, setGame } from './store/gameSlice';
 
 export const GameProcessor = () => {
   const socket = useSocket();
@@ -29,6 +28,23 @@ export const GameProcessor = () => {
     socket?.on('GameStarted', (game: Game) => {
       dispatch(setGame(game));
     });
+
+    socket?.on('GameRoundStarted', (round: Round, data: unknown) => {
+      dispatch(nextRound([round, data]));
+    });
+
+    socket?.on('GameCompleted', () => {
+      dispatch(completeGame(null));
+    });
+
+    return () => {
+      socket?.off('PlayerJoinedLobby');
+      socket?.off('PlayerLeftLobby');
+      socket?.off('PlayerWasExpelled');
+      socket?.off('GameStarted');
+      socket?.off('GameRoundStarted');
+      socket?.off('GameCompleted');
+    };
   }, [socket, dispatch]);
 
   useEffect(() => {
@@ -45,11 +61,7 @@ export const GameProcessor = () => {
         dispatch(setLobby(lobby));
       });
     }
-  }, [socket, dispatch, navigate]);
+  }, [socket, dispatch]);
 
-  return (
-    <SocketProvider>
-      <Outlet />
-    </SocketProvider>
-  );
+  return <Outlet />;
 };

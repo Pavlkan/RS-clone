@@ -29,7 +29,7 @@ export const LobbyPage = () => {
     if (game.id) {
       navigate('/game');
     }
-  }, [game.id, navigate]);
+  }, [game.id]);
 
   const onSnackbarClose = useCallback(() => setShown(false), [setShown]);
 
@@ -53,6 +53,7 @@ export const LobbyPage = () => {
   return (
     <>
       <Box
+        // TODO: move style to separate file
         sx={{
           display: 'grid',
           gridTemplateRows: 'auto 1fr',
