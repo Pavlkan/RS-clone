@@ -10,7 +10,7 @@ export interface Game {
 }
 
 export interface Round {
-  type: 'Drawing' | 'Writing';
+  type: 'drawing' | 'writing';
   end: number;
 }
 

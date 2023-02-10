@@ -53,6 +53,7 @@ export const LobbyPage = () => {
   return (
     <>
       <Box
+        // TODO: move style to separate file
         sx={{
           display: 'grid',
           gridTemplateRows: 'auto 1fr',
