@@ -10,6 +10,7 @@ export interface User {
 export interface UserState {
   entity: User;
   loading: boolean;
+  expelled: boolean;
 }
 
 export const createUser = createAsyncThunk('user/createUser', async ({ name, avatar }: { name: string; avatar: string }) => {
@@ -30,6 +31,7 @@ const initialState: UserState = {
     id: '',
   },
   loading: false,
+  expelled: false,
 };
 
 export const userSlice = createSlice<UserState, SliceCaseReducers<UserState>>({
@@ -37,6 +39,9 @@ export const userSlice = createSlice<UserState, SliceCaseReducers<UserState>>({
   initialState,
   reducers: {
     resetUser: () => initialState,
+    userExpelled: (state: UserState) => {
+      state.expelled = true;
+    },
   },
   extraReducers: builder => {
     builder
@@ -52,6 +57,6 @@ export const userSlice = createSlice<UserState, SliceCaseReducers<UserState>>({
   },
 });
 
-export const { resetUser } = userSlice.actions;
+export const { resetUser, userExpelled } = userSlice.actions;
 
 export default userSlice.reducer;
