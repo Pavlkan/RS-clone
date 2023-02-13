@@ -10,6 +10,7 @@ import { createUser } from '../store/userSlice';
 import { AppDispatch } from '../store/store';
 import { selectIsExpelled, selectIsUserLoading, selectUser } from '../store/selectors';
 import GarticPhone from '../../assets/Garticphone.webp';
+import { Footer } from '../components/footer';
 
 export const LandingPage = () => {
   const user = useSelector(selectUser);
@@ -91,7 +92,7 @@ export const LandingPage = () => {
             {isInvite ? 'JOIN' : 'START'}
           </LoadingButton>
         </Box>
-        <Box sx={{ margin: '0 auto' }}>LINKS</Box>
+        <Footer></Footer>
       </Box>
 
       <Snackbar
