@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { selectCurrentRound, selectGame, selectIsFirstRound } from '../store/selectors';
