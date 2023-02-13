@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import clickAudio from '../../../assets/click.mp3';
-import flipAudio from '../../../assets/click.mp3';
+import flipAudio from '../../../assets/flip.mp3';
 import VolumeOffRoundedIcon from '@mui/icons-material/VolumeOffRounded';
 import VolumeUpRoundedIcon from '@mui/icons-material/VolumeUpRounded';
 import { IconButton } from '@mui/material';
@@ -13,11 +13,13 @@ const soundOf = (state: boolean) => {
 };
 export const playClick = () => {
   if (statusAudio) {
+    audioClick.currentTime = 0;
     audioClick.play();
   }
 };
 export const playFlip = () => {
   if (statusAudio) {
+    audioFlip.currentTime = 0;
     audioFlip.play();
   }
 };
