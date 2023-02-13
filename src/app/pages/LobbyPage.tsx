@@ -1,14 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Box from '@mui/material/Box';
+import { Box, IconButton, Button, Stack, Snackbar } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import Button from '@mui/material/Button';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import VolumeUpRoundedIcon from '@mui/icons-material/VolumeUpRounded';
-import Stack from '@mui/material/Stack';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 import LinkIcon from '@mui/icons-material/Link';
-import Snackbar from '@mui/material/Snackbar';
 
 import { PlayersBox } from '../components/players/players-box/PlayersBox';
 import { selectGame, selectIsOwner, selectLobby } from '../store/selectors';
@@ -75,7 +72,9 @@ export const LobbyPage = () => {
           </Button>
           <img src={GarticPhone} width="35%" style={{ justifySelf: 'center' }} alt="GarticPhone" />
           {/* TODO: sound component with onClick */}
-          <VolumeUpRoundedIcon sx={{ justifySelf: 'center' }} />
+          <IconButton sx={{ justifySelf: 'center' }}>
+            <VolumeUpRoundedIcon />
+          </IconButton>
         </Box>
         <Box
           sx={{

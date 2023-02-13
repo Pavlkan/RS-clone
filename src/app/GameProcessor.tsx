@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useSocket } from './socket/useSocket';
 import { addPlayer, LobbyState, removePlayer, setLobby } from './store/lobbySlice';
-import { User } from './store/userSlice';
+// eslint-disable-next-line import/named
+import { userExpelled, User } from './store/userSlice';
 import { completeGame, Game, nextRound, Round, setGame } from './store/gameSlice';
+import { selectUser } from './store/selectors';
 
 export const GameProcessor = () => {
   const socket = useSocket();
+  const currentUser = useSelector(selectUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -22,7 +25,12 @@ export const GameProcessor = () => {
     });
 
     socket?.on('PlayerWasExpelled', (player: User) => {
-      dispatch(removePlayer(player));
+      if (currentUser.id === player.id) {
+        dispatch(userExpelled(null));
+        navigate('/landing');
+      } else {
+        dispatch(removePlayer(player));
+      }
     });
 
     socket?.on('GameStarted', (game: Game) => {
@@ -33,7 +41,8 @@ export const GameProcessor = () => {
       dispatch(nextRound([round, data]));
     });
 
-    socket?.on('GameCompleted', () => {
+    socket?.on('GameCompleted', (album: any) => {
+      console.log(album);
       dispatch(completeGame(null));
     });
 
