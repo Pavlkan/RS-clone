@@ -3,6 +3,7 @@ import NextPlanRoundedIcon from '@mui/icons-material/NextPlanRounded';
 import Box from '@mui/material/Box';
 
 import { avatarIcons } from './icons';
+import { playFlip } from '../audio-controls';
 
 export interface AvatarIconProps {
   onChange: (avatar: string) => void;
@@ -22,7 +23,7 @@ export const AvatarIcon = ({ onChange }: AvatarIconProps) => {
   }, [avatarIndex, onChange]);
 
   return (
-    <Box width="25%" sx={{ position: 'relative' }}>
+    <Box width="25%" sx={{ position: 'relative' }} onClick={playFlip}>
       <img
         width="100%"
         style={{ cursor: 'pointer' }}
