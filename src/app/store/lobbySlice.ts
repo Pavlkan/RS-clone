@@ -2,12 +2,14 @@
 import { createSlice, SliceCaseReducers, PayloadAction } from '@reduxjs/toolkit';
 import { User } from './userSlice';
 
-export interface LobbyState {
+export interface Lobby {
   id: string;
   owner: User;
   players: User[];
   playersLimit: number;
 }
+
+export type LobbyState = Lobby;
 
 export const lobbySlice = createSlice<LobbyState, SliceCaseReducers<LobbyState>>({
   name: 'lobby',

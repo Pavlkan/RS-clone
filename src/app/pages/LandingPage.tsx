@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { Box, TextField } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
-import { createUser } from '../store/userSlice';
-import Box from '@mui/material/Box';
-import PhoneMissedIcon from '@mui/icons-material/PhoneMissed';
-import { AvatarIcon } from '../components/avatar/AvatarIcon';
-import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+
+import { AvatarIcon } from '../components/avatar/AvatarIcon';
+import { createUser } from '../store/userSlice';
 import { AppDispatch } from '../store/store';
 import { selectIsUserLoading, selectUser } from '../store/selectors';
+import GarticPhone from '../../assets/Garticphone.webp';
 
 export const LandingPage = () => {
   const user = useSelector(selectUser);
@@ -21,24 +21,26 @@ export const LandingPage = () => {
   const [avatar, setAvatar] = useState('');
 
   const isInvite = !!searchParams.get('lobby');
+  const disabled = !name || !avatar;
 
   useEffect(() => {
     if (user.id) {
       navigate({ pathname: '/lobby', search: searchParams.toString() });
     }
-  }, [user.id, navigate, searchParams]);
+  }, [user.id, searchParams]);
 
   return (
     <Box
       sx={{
+        padding: '2%',
         display: 'grid',
         gridTemplateRows: 'auto 1fr auto',
         gridTemplateColumns: '100%',
-        gap: '20%',
+        gap: '5%',
         minHeight: '100vh',
       }}
     >
-      <PhoneMissedIcon sx={{ margin: '0 auto' }} />
+      <img src={GarticPhone} width="15%" style={{ justifySelf: 'center' }} alt="GarticPhone" />
       <Box
         sx={{
           margin: '0 auto',
@@ -70,6 +72,7 @@ export const LandingPage = () => {
         <LoadingButton
           variant="contained"
           loading={loading}
+          disabled={disabled}
           startIcon={<PlayArrowRoundedIcon />}
           onClick={() => dispatch(createUser({ name, avatar }))}
         >
