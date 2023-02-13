@@ -43,6 +43,7 @@ export const GameProcessor = () => {
 
     socket?.on('GameCompleted', (album: any) => {
       console.log(album);
+      console.log(new Map(album.data));
       dispatch(completeGame(null));
     });
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSocket } from '../../../socket/useSocket';
+import { Paint } from '../../paint/Paint';
 
 export interface DrawingPhaseProps {
   isInitialWrite: boolean;
@@ -14,5 +15,10 @@ export const DrawingPhase = (props: DrawingPhaseProps) => {
     socket?.emit('game:update-data', props.currentPhase, phrase);
   }, [socket, props.currentPhase, phrase]);
 
-  return <h1 onClick={() => setPhrase('!!')}>DrawingPhase</h1>;
+  return (
+    <>
+      <Paint></Paint>
+      <h1 onClick={() => setPhrase('!!')}>DrawingPhase</h1>
+    </>
+  );
 };

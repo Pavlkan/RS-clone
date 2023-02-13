@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Box, Typography, TextField, Button } from '@mui/material';
 import TimelapseRoundedIcon from '@mui/icons-material/TimelapseRounded';
 import PermPhoneMsgRoundedIcon from '@mui/icons-material/PermPhoneMsgRounded';
@@ -19,10 +19,6 @@ export const WritingPhase = (props: WritingPhaseProps) => {
   const textFieldLabel = props.isInitialWrite ? 'Your witty sentence' : 'Type your description for this scene here';
 
   const onSubmitPhraseClick = useCallback(() => {
-    socket?.emit('game:update-data', props.currentPhase, phrase);
-  }, [socket, props.currentPhase, phrase]);
-
-  useEffect(() => {
     socket?.emit('game:update-data', props.currentPhase, phrase);
   }, [socket, props.currentPhase, phrase]);
 
