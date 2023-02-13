@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, IconButton, Button, Stack, Snackbar } from '@mui/material';
+import { Box, Button, Stack, Snackbar } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
-import VolumeUpRoundedIcon from '@mui/icons-material/VolumeUpRounded';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 import LinkIcon from '@mui/icons-material/Link';
 
@@ -12,6 +11,7 @@ import { selectGame, selectIsOwner, selectLobby } from '../store/selectors';
 import { useSocket } from '../socket/useSocket';
 import { resetUser } from '../store/userSlice';
 import GarticPhone from '../../assets/Garticphone.webp';
+import ConstrolsAudio, { playClick } from '../components/audio-controls';
 
 export const LobbyPage = () => {
   const [shown, setShown] = useState(false);
@@ -34,17 +34,20 @@ export const LobbyPage = () => {
     const link = `${location.origin}/landing?lobby=${lobby.id}`;
     navigator.clipboard.writeText(link);
     setShown(true);
+    playClick();
   }, [setShown, lobby]);
 
   const onStartClick = useCallback(() => {
     if (isOwner) {
       socket?.emit('game:start');
     }
+    playClick();
   }, [socket, isOwner]);
 
   const onBackClick = useCallback(() => {
     dispatch(resetUser(null));
     navigate('/landing');
+    playClick();
   }, [dispatch, navigate]);
 
   return (
@@ -72,9 +75,7 @@ export const LobbyPage = () => {
           </Button>
           <img src={GarticPhone} width="35%" style={{ justifySelf: 'center' }} alt="GarticPhone" />
           {/* TODO: sound component with onClick */}
-          <IconButton sx={{ justifySelf: 'center' }}>
-            <VolumeUpRoundedIcon />
-          </IconButton>
+          <ConstrolsAudio />
         </Box>
         <Box
           sx={{
