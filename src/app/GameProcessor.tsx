@@ -41,7 +41,8 @@ export const GameProcessor = () => {
       dispatch(nextRound([round, data]));
     });
 
-    socket?.on('GameCompleted', () => {
+    socket?.on('GameCompleted', (album: any) => {
+      console.log(album);
       dispatch(completeGame(null));
     });
 
