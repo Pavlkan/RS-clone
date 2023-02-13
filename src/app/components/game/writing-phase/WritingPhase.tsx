@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Box, Typography, TextField, Button } from '@mui/material';
 import TimelapseRoundedIcon from '@mui/icons-material/TimelapseRounded';
 import PermPhoneMsgRoundedIcon from '@mui/icons-material/PermPhoneMsgRounded';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 
 import Garticphone from '../../../../assets/Garticphone.webp';
+import { useSocket } from '../../../socket/useSocket';
 
 export interface WritingPhaseProps {
   isInitialWrite: boolean;
@@ -13,7 +14,17 @@ export interface WritingPhaseProps {
 }
 
 export const WritingPhase = (props: WritingPhaseProps) => {
+  const socket = useSocket();
+  const [phrase, setPhrase] = useState('Wait, not so fast :(');
   const textFieldLabel = props.isInitialWrite ? 'Your witty sentence' : 'Type your description for this scene here';
+
+  const onSubmitPhraseClick = useCallback(() => {
+    socket?.emit('game:update-data', props.currentPhase, phrase);
+  }, [socket, props.currentPhase, phrase]);
+
+  useEffect(() => {
+    socket?.emit('game:update-data', props.currentPhase, phrase);
+  }, [socket, props.currentPhase, phrase]);
 
   return (
     <Box
@@ -52,9 +63,14 @@ export const WritingPhase = (props: WritingPhaseProps) => {
             </Typography>
           </>
         )) || <h1>Another player picture</h1>}
-        <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
-          <TextField label={textFieldLabel} variant="outlined" style={{ width: '70%' }}></TextField>
-          <Button startIcon={<CheckCircleRoundedIcon />} variant="contained">
+        <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'start', gap: '3%', justifySelf: 'center' }}>
+          <TextField
+            label={textFieldLabel}
+            variant="outlined"
+            style={{ width: '60%' }}
+            onChange={event => setPhrase(event.target.value)}
+          ></TextField>
+          <Button startIcon={<CheckCircleRoundedIcon />} variant="contained" onClick={onSubmitPhraseClick}>
             DONE
           </Button>
         </Box>

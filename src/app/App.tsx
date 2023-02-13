@@ -11,6 +11,7 @@ import { GamePage } from './pages/GamePage';
 import { SocketProvider } from './socket/SocketProvider';
 import { selectIsAuth } from './store/selectors';
 import { ProtectedRoute } from './ProtectedRoute';
+import { ResultsPage } from './pages/ResultsPage';
 
 const darkTheme = createTheme({
   palette: {
@@ -41,6 +42,7 @@ export const App = () => {
           >
             <Route path="/lobby" element={<LobbyPage />} />
             <Route path="/game" element={<GamePage />} />
+            <Route path="/results" element={<ResultsPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
