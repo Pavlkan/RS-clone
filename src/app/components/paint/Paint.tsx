@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Box, Button, Grid } from '@mui/material';
+import { Box, Button, Grid, useTheme } from '@mui/material';
 import { Canvas } from './Canvas';
 import { ColorsPalette } from './ColorsPalette';
 // eslint-disable-next-line import/named
 import { MuiColorInputValue } from 'mui-color-input';
 import { BrushSize } from './BrushSize';
 import { Tools } from './Tools';
-import { borderedItemStyles } from './stiles';
+import { borderedItemStyles } from './styles';
 
 const defaultBrusColor = '#000000';
 const brushSizes = [2, 5, 8, 11, 15];
@@ -19,6 +19,7 @@ export const Paint = () => {
   const [tool, setTool] = useState<string>('brush');
   const [clearTrigger, setSlearTrigger] = useState(0);
   const [saveTrigger, setSaveTrigger] = useState(0);
+  const theme = useTheme();
   const onChangeBrashColor = (color: MuiColorInputValue) => {
     setBrashColor(color);
   };
@@ -64,12 +65,12 @@ export const Paint = () => {
           <Tools onToolChange={onToolChange} activeToolId={tool} />
           <Grid container spacing={0} marginTop={2} direction="row" justifyContent="center" alignItems="center">
             <Grid item xs={8} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <Button variant="text" onClick={handleClearCanvas} size="large" sx={{ color: '#ffffff' }}>
+              <Button variant="text" onClick={handleClearCanvas} size="large" sx={{ color: theme.palette.text.primary }}>
                 Clear
               </Button>
             </Grid>
             <Grid item xs={8} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <Button variant="text" onClick={handleSaveCanvas} size="large" sx={{ color: '#ffffff' }}>
+              <Button variant="text" onClick={handleSaveCanvas} size="large" sx={{ color: theme.palette.text.primary }}>
                 Save
               </Button>
             </Grid>

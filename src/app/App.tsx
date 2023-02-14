@@ -3,6 +3,10 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useSelector } from 'react-redux';
+// eslint-disable-next-line import/named
+import { Box, IconButton, PaletteMode } from '@mui/material';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 import { LandingPage } from './pages/LandingPage';
 import { LobbyPage } from './pages/LobbyPage';
@@ -13,39 +17,73 @@ import { selectIsAuth } from './store/selectors';
 import { ProtectedRoute } from './ProtectedRoute';
 import { ResultsPage } from './pages/ResultsPage';
 
-const darkTheme = createTheme({
+const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
+
+const getDesignTokens = (mode: PaletteMode) => ({
   palette: {
-    mode: 'dark',
+    mode: mode,
   },
 });
 
 export const App = () => {
+  const [mode, setMode] = React.useState<PaletteMode>('dark');
+  const colorMode = React.useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode: PaletteMode) => (prevMode === 'light' ? 'dark' : 'light'));
+      },
+    }),
+    [],
+  );
+
+  const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
   const isAuth = useSelector(selectIsAuth);
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-
-      <BrowserRouter>
-        <Routes>
-          <Route path="/landing" element={<LandingPage />} />
-          <Route path="/" element={<Navigate to="/landing" />} />
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute condition={isAuth} redirect="/landing">
-                <SocketProvider>
-                  <GameProcessor />
-                </SocketProvider>
-              </ProtectedRoute>
-            }
-          >
-            <Route path="/lobby" element={<LobbyPage />} />
-            <Route path="/game" element={<GamePage />} />
-            <Route path="/results" element={<ResultsPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Box
+          sx={{
+            width: 'fit-content',
+            position: 'absolute',
+            top: 20,
+            left: 20,
+            bgcolor: 'background.default',
+            color: 'text.primary',
+            border: '1px solid',
+            borderRadius: 2,
+            p: 1.5,
+            cursor: 'pointer',
+          }}
+          onClick={colorMode.toggleColorMode}
+        >
+          {theme.palette.mode.toUpperCase()} MODE
+          <IconButton sx={{ ml: 1 }} color="inherit">
+            {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+          </IconButton>
+        </Box>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/landing" element={<LandingPage />} />
+            <Route path="/" element={<Navigate to="/landing" />} />
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute condition={isAuth} redirect="/landing">
+                  <SocketProvider>
+                    <GameProcessor />
+                  </SocketProvider>
+                </ProtectedRoute>
+              }
+            >
+              <Route path="/lobby" element={<LobbyPage />} />
+              <Route path="/game" element={<GamePage />} />
+              <Route path="/results" element={<ResultsPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   );
 };
