@@ -42,7 +42,14 @@ export const ColorsPalette: React.FC<ColorsPaletteProps> = ({ color, onColorChan
 
   const colors = colorOptions.map((color, index) => {
     return (
-      <Grid onClick={() => hanleSelectColor(color)} key={index} m={0.5} item xs={3} sx={{ backgroundColor: color, height: 40 }}></Grid>
+      <Grid
+        onClick={() => hanleSelectColor(color)}
+        key={index}
+        m={0.5}
+        item
+        xs={3}
+        sx={{ backgroundColor: color, height: 40, border: '1px solid' }}
+      ></Grid>
     );
   });
 

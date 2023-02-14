@@ -296,5 +296,5 @@ export const Canvas: React.FC<CanvasProps> = ({ width, height, brushColor, brush
     };
   }, [exitPaint]);
 
-  return <canvas ref={canvasRef} height={height} width={width} />;
+  return <canvas ref={canvasRef} height={height} width={width} style={{ border: '1px solid' }} />;
 };

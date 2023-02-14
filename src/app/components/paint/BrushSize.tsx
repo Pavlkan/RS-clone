@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, useTheme } from '@mui/material';
 // eslint-disable-next-line import/named
-import { circleShape, borderedItemStyles } from './stiles';
+import { circleShape, borderedItemStyles } from './styles';
 
 type BrushSizeProps = {
   sizeOptions: number[];
@@ -12,6 +12,7 @@ type BrushSizeProps = {
 const multipayer = 2;
 
 export const BrushSize: React.FC<BrushSizeProps> = ({ size, sizeOptions, onSizeChange }) => {
+  const theme = useTheme();
   const hanleSelectSize = (size: number) => {
     onSizeChange(size);
   };
@@ -41,7 +42,7 @@ export const BrushSize: React.FC<BrushSizeProps> = ({ size, sizeOptions, onSizeC
         <Box
           sx={[
             ...(Array.isArray(circleShape) ? circleShape : [circleShape]),
-            { height: 15 + option * multipayer, width: 15 + option * multipayer },
+            { height: 15 + option * multipayer, width: 15 + option * multipayer, backgroundColor: theme.palette.text.primary },
           ]}
         ></Box>
       </Grid>

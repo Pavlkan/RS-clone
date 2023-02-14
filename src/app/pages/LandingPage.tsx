@@ -60,7 +60,7 @@ export const LandingPage = () => {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            border: '1px solid white',
+            border: '1px solid',
             borderRadius: '10px',
           }}
         >

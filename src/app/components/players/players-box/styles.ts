@@ -4,7 +4,7 @@ export const playersContainer = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  border: '1px solid white',
+  border: '1px solid',
   borderRadius: '10px',
 };
 

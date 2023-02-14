@@ -1,10 +1,9 @@
 const borderedItemStyles = {
-  border: '1px solid white',
+  border: '1px solid',
   borderRadius: '10px',
 };
 
 const circleShape = {
-  backgroundColor: '#ffffff',
   borderRadius: '50%',
   display: 'inline-block',
 };
