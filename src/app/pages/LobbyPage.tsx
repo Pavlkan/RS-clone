@@ -12,6 +12,7 @@ import { useSocket } from '../socket/useSocket';
 import { resetUser } from '../store/userSlice';
 import GarticPhone from '../../assets/Garticphone.webp';
 import ConstrolsAudio, { playClick } from '../components/audio-controls';
+import GameRules from '../components/game-rules/GameRules';
 
 export const LobbyPage = () => {
   const [shown, setShown] = useState(false);
@@ -88,12 +89,13 @@ export const LobbyPage = () => {
           <Box>
             <PlayersBox />
           </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            {isOwner && <h1>Settings and presets</h1>}
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} pb={5}>
+            <GameRules />
+            {/* {isOwner && <h1>Settings and presets</h1>} */}
             {/* TODO: players options element and player card */}
 
             {isOwner && (
-              <Stack direction="row" spacing={2}>
+              <Stack direction="row" spacing={2} mt={5}>
                 <Button variant="outlined" startIcon={<LinkIcon />} onClick={onInviteClick}>
                   Invite
                 </Button>
