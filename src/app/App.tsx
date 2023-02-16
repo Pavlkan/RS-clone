@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line import/named
 import { Box, IconButton, PaletteMode } from '@mui/material';
@@ -27,6 +28,7 @@ const getDesignTokens = (mode: PaletteMode) => ({
 
 export const App = () => {
   const [mode, setMode] = React.useState<PaletteMode>('dark');
+
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
@@ -37,8 +39,8 @@ export const App = () => {
   );
 
   const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
+  const matches = useMediaQuery(theme.breakpoints.up('lg'));
   const isAuth = useSelector(selectIsAuth);
-
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
@@ -47,18 +49,18 @@ export const App = () => {
           sx={{
             width: 'fit-content',
             position: 'absolute',
-            top: 20,
-            left: 20,
+            top: matches ? 20 : 3,
+            left: matches ? 20 : 3,
             bgcolor: 'background.default',
             color: 'text.primary',
             border: '1px solid',
             borderRadius: 2,
-            p: 1.5,
+            p: matches ? 1.5 : 0,
             cursor: 'pointer',
           }}
           onClick={colorMode.toggleColorMode}
         >
-          {theme.palette.mode.toUpperCase()} MODE
+          <span>{matches ? `${theme.palette.mode.toUpperCase()} MODE` : ''}</span>
           <IconButton sx={{ ml: 1 }} color="inherit">
             {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>
