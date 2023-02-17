@@ -33,8 +33,8 @@ export const App = () => {
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
-        setMode(() => {
-          const nextThemeMode = localStorage.getItem('themeMode') === 'light' ? 'dark' : 'light';
+        setMode((prevMode: PaletteMode) => {
+          const nextThemeMode = prevMode === 'light' ? 'dark' : 'light';
           localStorage.setItem('themeMode', nextThemeMode);
           return nextThemeMode;
         });
