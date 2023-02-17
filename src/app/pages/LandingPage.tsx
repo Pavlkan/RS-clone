@@ -64,6 +64,7 @@ export const LandingPage = () => {
             justifyContent: 'center',
             border: '1px solid',
             borderRadius: '10px',
+            maxHeight: '45vh',
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
