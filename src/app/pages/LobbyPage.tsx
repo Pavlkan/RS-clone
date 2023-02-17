@@ -11,7 +11,7 @@ import { selectGame, selectIsOwner, selectLobby } from '../store/selectors';
 import { useSocket } from '../socket/useSocket';
 import { resetUser } from '../store/userSlice';
 import GarticPhone from '../../assets/Garticphone.webp';
-import ConstrolsAudio, { playClick } from '../components/audio-controls';
+import ConstrolsAudio, { playAudio } from '../components/audio-controls';
 import GameRules from '../components/game-rules/GameRules';
 
 export const LobbyPage = () => {
@@ -35,20 +35,20 @@ export const LobbyPage = () => {
     const link = `${location.origin}/landing?lobby=${lobby.id}`;
     navigator.clipboard.writeText(link);
     setShown(true);
-    playClick();
+    playAudio('click');
   }, [setShown, lobby]);
 
   const onStartClick = useCallback(() => {
     if (isOwner) {
       socket?.emit('game:start');
     }
-    playClick();
+    playAudio('click');
   }, [socket, isOwner]);
 
   const onBackClick = useCallback(() => {
     dispatch(resetUser(null));
     navigate('/landing');
-    playClick();
+    playAudio('click');
   }, [dispatch, navigate]);
 
   return (

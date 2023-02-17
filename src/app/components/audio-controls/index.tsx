@@ -5,12 +5,15 @@ import VolumeOffRoundedIcon from '@mui/icons-material/VolumeOffRounded';
 import VolumeUpRoundedIcon from '@mui/icons-material/VolumeUpRounded';
 import { IconButton } from '@mui/material';
 
-const audioClick = new Audio(clickAudio);
-const audioFlip = new Audio(flipAudio);
+const sounds: { [key: string]: HTMLAudioElement } = {
+  click: new Audio(clickAudio),
+  flip: new Audio(flipAudio),
+};
 
 function setStatusSound(status: boolean) {
   localStorage.setItem('statusSound', `${status}`);
 }
+
 function getStatusSuond() {
   const status = localStorage.getItem('statusSound');
   if (status) {
@@ -18,16 +21,12 @@ function getStatusSuond() {
   }
   setStatusSound(true);
 }
-export const playClick = () => {
-  if (getStatusSuond()) {
-    audioClick.currentTime = 0;
-    audioClick.play();
-  }
-};
-export const playFlip = () => {
-  if (getStatusSuond()) {
-    audioFlip.currentTime = 0;
-    audioFlip.play();
+
+export const playAudio = (str: string) => {
+  if (getStatusSuond() && str in sounds) {
+    const audio: HTMLAudioElement = sounds[str];
+    audio.currentTime = 0;
+    audio.play();
   }
 };
 
@@ -40,7 +39,7 @@ const ConstrolsAudio = () => {
         onClick={() => {
           setStatusSound(!status);
           setStatus(!status);
-          playClick();
+          playAudio('click');
         }}
       >
         {status ? <VolumeUpRoundedIcon /> : <VolumeOffRoundedIcon />}
