@@ -27,12 +27,17 @@ const getDesignTokens = (mode: PaletteMode) => ({
 });
 
 export const App = () => {
-  const [mode, setMode] = React.useState<PaletteMode>('dark');
+  const themeMode: 'dark' | 'light' = localStorage.getItem('themeMode') === 'light' ? 'light' : 'dark';
+  const [mode, setMode] = React.useState<PaletteMode>(themeMode);
 
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
-        setMode((prevMode: PaletteMode) => (prevMode === 'light' ? 'dark' : 'light'));
+        setMode(() => {
+          const nextThemeMode = localStorage.getItem('themeMode') === 'light' ? 'dark' : 'light';
+          localStorage.setItem('themeMode', nextThemeMode);
+          return nextThemeMode;
+        });
       },
     }),
     [],
