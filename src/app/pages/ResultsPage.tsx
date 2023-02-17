@@ -1,5 +1,6 @@
-import React, { useCallback } from 'react';
-import { Box, Button, List } from '@mui/material';
+
+import React, { useCallback, useState } from 'react';
+import { Box, IconButton, Button, List } from '@mui/material';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -7,19 +8,19 @@ import { useNavigate } from 'react-router-dom';
 import GarticPhone from '../../assets/Garticphone.webp';
 import { resetUser } from '../store/userSlice';
 import { playersContainer, playersListResults } from '../components/players/players-box/styles';
-import { selectGame, selectLobby } from '../store/selectors';
+import { selectGameAlbum, selectLobby } from '../store/selectors';
 import { Player } from '../components/players/player-list-item/Player';
+import { ResultsAlbum } from '../components/results-album/ResultsAlbum';
 import ConstrolsAudio from '../components/audio-controls';
 
 export const ResultsPage = () => {
   const lobby = useSelector(selectLobby);
-  const game = useSelector(selectGame);
-  // const albumData =
+  const gameAlbum = useSelector(selectGameAlbum);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  console.log('game:', game);
-  console.log('lobby:', lobby);
+  const [currentPlayer, setCurrentPlayer] = useState(0);
 
   const onBackClick = useCallback(() => {
     dispatch(resetUser(null));
@@ -48,7 +49,7 @@ export const ResultsPage = () => {
           HOME
         </Button>
         <img src={GarticPhone} width="35%" style={{ justifySelf: 'center' }} alt="GarticPhone" />
-        {/* TODO: sound component with onClick */}
+
         <ConstrolsAudio />
       </Box>
       <Box
@@ -68,7 +69,8 @@ export const ResultsPage = () => {
           </List>
         </Box>
         <Box>
-          <h1>Result Album</h1>
+          <ResultsAlbum albumIndex={currentPlayer} gameAlbum={gameAlbum} />
+          <button onClick={() => setCurrentPlayer(currentPlayer + 1)}>+1</button>
         </Box>
       </Box>
     </Box>

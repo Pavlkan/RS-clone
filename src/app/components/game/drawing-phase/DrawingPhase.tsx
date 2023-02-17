@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useSocket } from '../../../socket/useSocket';
 import { Paint } from '../../paint/Paint';
@@ -16,9 +17,19 @@ export const DrawingPhase = (props: DrawingPhaseProps) => {
   }, [socket, props.currentPhase, phrase]);
 
   return (
-    <>
-      <Paint></Paint>
+    <Box
+      sx={{
+        padding: '2%',
+        display: 'grid',
+        gridTemplateRows: 'auto 1fr',
+        gridTemplateColumns: '90%',
+        justifyContent: 'center',
+        gap: '10%',
+        minHeight: '100vh',
+      }}
+    >
+      <Paint currentPhase={props.currentPhase}></Paint>
       <h1 onClick={() => setPhrase('!!')}>DrawingPhase</h1>
-    </>
+    </Box>
   );
 };

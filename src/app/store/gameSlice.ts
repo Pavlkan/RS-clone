@@ -18,11 +18,16 @@ export interface RoundState extends Round {
   data?: unknown;
 }
 
+export interface GameAlbum {
+  data: [string, [string, string | null]];
+}
+
 export interface GameState {
   id: string;
   roundsCount: number;
   rounds: RoundState[];
   isCompleted: boolean;
+  gameAlbum: GameAlbum;
 }
 
 export const gameSlice = createSlice<GameState, SliceCaseReducers<GameState>>({
@@ -32,6 +37,7 @@ export const gameSlice = createSlice<GameState, SliceCaseReducers<GameState>>({
     roundsCount: 0,
     rounds: [],
     isCompleted: false,
+    gameAlbum: { data: ['', ['', null]] },
   },
   reducers: {
     setGame: (state: GameState, action: PayloadAction<Game>) => {
@@ -45,9 +51,12 @@ export const gameSlice = createSlice<GameState, SliceCaseReducers<GameState>>({
     completeGame: (state: GameState) => {
       state.isCompleted = true;
     },
+    setGameAlbum: (state: GameState, action: PayloadAction<GameAlbum>) => {
+      state.gameAlbum.data = action.payload.data;
+    },
   },
 });
 
-export const { setGame, nextRound, completeGame } = gameSlice.actions;
+export const { setGame, nextRound, completeGame, setGameAlbum } = gameSlice.actions;
 
 export default gameSlice.reducer;

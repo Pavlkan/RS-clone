@@ -8,21 +8,31 @@ import { MuiColorInputValue } from 'mui-color-input';
 import { BrushSize } from './BrushSize';
 import { Tools } from './Tools';
 import { borderedItemStyles } from './styles';
+import { useSocket } from '../../socket/useSocket';
+import { initialImage } from './initialImage';
 
 const defaultBrusColor = '#000000';
 const brushSizes = [2, 5, 8, 11, 15];
 const defaultBrushSize = brushSizes[2];
 
-export const Paint = () => {
+export const Paint = (props: { currentPhase: number }) => {
+  const socket = useSocket();
   const [brushColor, setBrashColor] = useState<MuiColorInputValue>(defaultBrusColor);
   const [brushSize, setBrushSize] = useState<number>(defaultBrushSize);
   const [tool, setTool] = useState<string>('brush');
   const [clearTrigger, setSlearTrigger] = useState(0);
   const [saveTrigger, setSaveTrigger] = useState(0);
+  const [changeTrigger, setChangeTrigger] = useState(0);
+  const [canvasData, setCanvasData] = useState(initialImage);
   const theme = useTheme();
   const onChangeBrashColor = (color: MuiColorInputValue) => {
     setBrashColor(color);
   };
+
+  const onSubmitPaintClick = React.useCallback(() => {
+    socket?.emit('game:update-data', props.currentPhase - 1, canvasData);
+    setChangeTrigger(trigger => trigger + 1);
+  }, [socket, props.currentPhase, canvasData]);
 
   const onChangeBrashSize = (size: number) => {
     setBrushSize(size);
@@ -40,6 +50,14 @@ export const Paint = () => {
     event.preventDefault();
     setSaveTrigger(trigger => trigger + 1);
   };
+
+  const handleSendCanvasData = (data: string) => {
+    setCanvasData(data);
+  };
+
+  React.useEffect(() => {
+    socket?.emit('game:update-data', props.currentPhase - 1, canvasData);
+  }, [socket, props.currentPhase, canvasData]);
 
   return (
     <Box sx={{ width: 1082, height: 698, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -59,6 +77,8 @@ export const Paint = () => {
             tool={tool}
             clearTrigger={clearTrigger}
             saveTrigger={saveTrigger}
+            changeTrigger={changeTrigger}
+            changeCanvasData={handleSendCanvasData}
           />
         </Grid>
         <Grid item xs={2} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -72,6 +92,9 @@ export const Paint = () => {
             <Grid item xs={8} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <Button variant="text" onClick={handleSaveCanvas} size="large" sx={{ color: theme.palette.text.primary }}>
                 Save
+              </Button>
+              <Button variant="text" onClick={onSubmitPaintClick} size="large" sx={{ color: theme.palette.text.primary }}>
+                Done
               </Button>
             </Grid>
           </Grid>

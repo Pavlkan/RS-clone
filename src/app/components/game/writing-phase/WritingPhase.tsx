@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { Box, Typography, TextField, Button } from '@mui/material';
 import TimelapseRoundedIcon from '@mui/icons-material/TimelapseRounded';
 import PermPhoneMsgRoundedIcon from '@mui/icons-material/PermPhoneMsgRounded';
@@ -19,7 +19,11 @@ export const WritingPhase = (props: WritingPhaseProps) => {
   const textFieldLabel = props.isInitialWrite ? 'Your witty sentence' : 'Type your description for this scene here';
 
   const onSubmitPhraseClick = useCallback(() => {
-    socket?.emit('game:update-data', props.currentPhase, phrase);
+    socket?.emit('game:update-data', props.currentPhase - 1, phrase);
+  }, [socket, props.currentPhase, phrase]);
+
+  useEffect(() => {
+    socket?.emit('game:update-data', props.currentPhase - 1, phrase);
   }, [socket, props.currentPhase, phrase]);
 
   return (
@@ -59,11 +63,13 @@ export const WritingPhase = (props: WritingPhaseProps) => {
             </Typography>
           </>
         )) || <h1>Another player picture</h1>}
-        <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'start', gap: '3%', justifySelf: 'center' }}>
+        <Box
+          sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'start', gap: '3%', WebkitJustifyContent: 'center' }}
+        >
           <TextField
             label={textFieldLabel}
             variant="outlined"
-            style={{ width: '60%' }}
+            style={{ width: '50%' }}
             onChange={event => setPhrase(event.target.value)}
           ></TextField>
           <Button startIcon={<CheckCircleRoundedIcon />} variant="contained" onClick={onSubmitPhraseClick}>

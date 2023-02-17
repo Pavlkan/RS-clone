@@ -6,7 +6,7 @@ import { useSocket } from './socket/useSocket';
 import { addPlayer, LobbyState, removePlayer, setLobby } from './store/lobbySlice';
 // eslint-disable-next-line import/named
 import { userExpelled, User } from './store/userSlice';
-import { completeGame, Game, nextRound, Round, setGame } from './store/gameSlice';
+import { completeGame, Game, GameAlbum, nextRound, Round, setGame, setGameAlbum } from './store/gameSlice';
 import { selectUser } from './store/selectors';
 
 export const GameProcessor = () => {
@@ -41,10 +41,9 @@ export const GameProcessor = () => {
       dispatch(nextRound([round, data]));
     });
 
-    socket?.on('GameCompleted', (album: any) => {
-      console.log(album);
-      console.log(new Map(album.data));
+    socket?.on('GameCompleted', (album: GameAlbum) => {
       dispatch(completeGame(null));
+      dispatch(setGameAlbum(album));
     });
 
     return () => {

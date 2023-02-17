@@ -9,19 +9,19 @@ type BrushSizeProps = {
   onSizeChange: (size: number) => void;
 };
 
-const multipayer = 2;
+const multiplayer = 2;
 
 export const BrushSize: React.FC<BrushSizeProps> = ({ size, sizeOptions, onSizeChange }) => {
   const theme = useTheme();
-  const hanleSelectSize = (size: number) => {
+  const handleSelectSize = (size: number) => {
     onSizeChange(size);
   };
 
   const sizes = sizeOptions.map((option, index) => {
-    const wrapperSize = 20 + sizeOptions[sizeOptions.length - 1] * multipayer;
+    const wrapperSize = 20 + sizeOptions[sizeOptions.length - 1] * multiplayer;
     return (
       <Grid
-        onClick={() => hanleSelectSize(option)}
+        onClick={() => handleSelectSize(option)}
         key={index}
         m={0.5}
         item
@@ -42,7 +42,7 @@ export const BrushSize: React.FC<BrushSizeProps> = ({ size, sizeOptions, onSizeC
         <Box
           sx={[
             ...(Array.isArray(circleShape) ? circleShape : [circleShape]),
-            { height: 15 + option * multipayer, width: 15 + option * multipayer, backgroundColor: theme.palette.text.primary },
+            { height: 15 + option * multiplayer, width: 15 + option * multiplayer, backgroundColor: theme.palette.text.primary },
           ]}
         ></Box>
       </Grid>
