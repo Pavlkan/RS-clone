@@ -8,6 +8,10 @@ import { useNavigate } from 'react-router-dom';
 
 export const GamePage = () => {
   const game = useSelector(selectGame);
+  if (game.rounds[0]) {
+    const time = new Date(game.rounds[0].end);
+    console.log(time.getSeconds());
+  }
   const currentRound = useSelector(selectCurrentRound);
   const isFirstRound = useSelector(selectIsFirstRound);
   const navigate = useNavigate();

@@ -11,6 +11,8 @@ interface CanvasProps {
   tool: string;
   clearTrigger: number;
   saveTrigger: number;
+  changeTrigger: number;
+  changeCanvasData: (data: string) => void;
 }
 
 type Coordinate = {
@@ -20,7 +22,17 @@ type Coordinate = {
 
 const CANVAS_BACKGROUND = '#ffffff';
 
-export const Canvas: React.FC<CanvasProps> = ({ width, height, brushColor, brushSize, tool, clearTrigger, saveTrigger }) => {
+export const Canvas: React.FC<CanvasProps> = ({
+  width,
+  height,
+  brushColor,
+  brushSize,
+  tool,
+  clearTrigger,
+  saveTrigger,
+  changeTrigger,
+  changeCanvasData,
+}) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isPainting, setIsPainting] = useState(false);
   const [mouseLocation, setMouseLocation] = useState<Coordinate | undefined>(undefined);
@@ -93,7 +105,7 @@ export const Canvas: React.FC<CanvasProps> = ({ width, height, brushColor, brush
   }, [saveTrigger]);
 
   const startPaint = useCallback((event: MouseEvent) => {
-    console.log('startPaint');
+    // console.log('startPaint');
     const coordinates = getCoordinates(event);
     if (coordinates) {
       setIsPainting(true);
@@ -295,6 +307,14 @@ export const Canvas: React.FC<CanvasProps> = ({ width, height, brushColor, brush
       canvas.removeEventListener('mouseleave', exitPaint);
     };
   }, [exitPaint]);
+
+  useEffect(() => {
+    if (changeTrigger && canvasRef.current) {
+      const canvas: HTMLCanvasElement = canvasRef.current;
+      console.log(canvas.toDataURL());
+      changeCanvasData(canvas.toDataURL());
+    }
+  });
 
   return <canvas ref={canvasRef} height={height} width={width} style={{ border: '1px solid' }} />;
 };
