@@ -1,5 +1,5 @@
 export const playersContainer = {
-  height: '100%',
+  maxHeight: '55vh',
   padding: '2%',
   display: 'flex',
   flexDirection: 'column',
@@ -10,7 +10,6 @@ export const playersContainer = {
 
 export const playersList = {
   width: '100%',
-  height: '50vh',
   overflow: 'auto',
   display: 'flex',
   flexDirection: 'column',

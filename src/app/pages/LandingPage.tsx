@@ -11,7 +11,7 @@ import { AppDispatch } from '../store/store';
 import { selectIsExpelled, selectIsUserLoading, selectUser } from '../store/selectors';
 import GarticPhone from '../../assets/Garticphone.webp';
 import { Footer } from '../components/footer';
-import { playClick } from '../components/audio-controls';
+import { playAudio } from '../components/audio-controls';
 
 export const LandingPage = () => {
   const user = useSelector(selectUser);
@@ -64,6 +64,7 @@ export const LandingPage = () => {
             justifyContent: 'center',
             border: '1px solid',
             borderRadius: '10px',
+            maxHeight: '45vh',
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
@@ -90,7 +91,7 @@ export const LandingPage = () => {
             startIcon={<PlayArrowRoundedIcon />}
             onClick={() => {
               dispatch(createUser({ name, avatar }));
-              playClick();
+              playAudio('click');
             }}
           >
             {isInvite ? 'JOIN' : 'START'}

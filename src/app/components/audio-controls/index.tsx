@@ -5,35 +5,41 @@ import VolumeOffRoundedIcon from '@mui/icons-material/VolumeOffRounded';
 import VolumeUpRoundedIcon from '@mui/icons-material/VolumeUpRounded';
 import { IconButton } from '@mui/material';
 
-let statusAudio = true;
-const audioClick = new Audio(clickAudio);
-const audioFlip = new Audio(flipAudio);
-const soundOf = (state: boolean) => {
-  statusAudio = state;
+const sounds: { [key: string]: HTMLAudioElement } = {
+  click: new Audio(clickAudio),
+  flip: new Audio(flipAudio),
 };
-export const playClick = () => {
-  if (statusAudio) {
-    audioClick.currentTime = 0;
-    audioClick.play();
+
+function setStatusSound(status: boolean) {
+  localStorage.setItem('statusSound', `${status}`);
+}
+
+function getStatusSuond() {
+  const status = localStorage.getItem('statusSound');
+  if (status) {
+    return JSON.parse(status);
   }
-};
-export const playFlip = () => {
-  if (statusAudio) {
-    audioFlip.currentTime = 0;
-    audioFlip.play();
+  setStatusSound(true);
+}
+
+export const playAudio = (str: string) => {
+  if (getStatusSuond() && str in sounds) {
+    const audio: HTMLAudioElement = sounds[str];
+    audio.currentTime = 0;
+    audio.play();
   }
 };
 
 const ConstrolsAudio = () => {
-  const [status, setStatus] = useState(true);
+  const [status, setStatus] = useState(getStatusSuond());
   return (
     <>
       <IconButton
         sx={{ justifySelf: 'center' }}
         onClick={() => {
-          playClick();
-          setStatus(status ? false : true);
-          soundOf(status);
+          setStatusSound(!status);
+          setStatus(!status);
+          playAudio('click');
         }}
       >
         {status ? <VolumeUpRoundedIcon /> : <VolumeOffRoundedIcon />}
