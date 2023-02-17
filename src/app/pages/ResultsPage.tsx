@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
-import { Box, IconButton, Button, List } from '@mui/material';
+import { Box, Button, List } from '@mui/material';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import VolumeUpRoundedIcon from '@mui/icons-material/VolumeUpRounded';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,6 +9,7 @@ import { resetUser } from '../store/userSlice';
 import { playersContainer, playersListResults } from '../components/players/players-box/styles';
 import { selectGame, selectLobby } from '../store/selectors';
 import { Player } from '../components/players/player-list-item/Player';
+import ConstrolsAudio from '../components/audio-controls';
 
 export const ResultsPage = () => {
   const lobby = useSelector(selectLobby);
@@ -49,9 +49,7 @@ export const ResultsPage = () => {
         </Button>
         <img src={GarticPhone} width="35%" style={{ justifySelf: 'center' }} alt="GarticPhone" />
         {/* TODO: sound component with onClick */}
-        <IconButton sx={{ justifySelf: 'center' }}>
-          <VolumeUpRoundedIcon />
-        </IconButton>
+        <ConstrolsAudio />
       </Box>
       <Box
         sx={{
