@@ -105,7 +105,6 @@ export const Canvas: React.FC<CanvasProps> = ({
   }, [saveTrigger]);
 
   const startPaint = useCallback((event: MouseEvent) => {
-
     const coordinates = getCoordinates(event);
     if (coordinates) {
       setIsPainting(true);
