@@ -17,14 +17,14 @@ const GameRules = () => {
   };
 
   useEffect(() => {
-    const stepperRepeat = setInterval(nextStep, 3000);
+    const stepperRepeat = setInterval(nextStep, 5000);
     return () => {
       clearInterval(stepperRepeat);
     };
   }, []);
 
   return (
-    <Stack spacing={0} width={'100%'} borderRadius={2} sx={{ border: '1px solid' }}>
+    <Stack spacing={0} width={'100%'} borderRadius={2} sx={{ border: '1px solid', height: '100%' }}>
       <Typography align={'center'} mt={2} mb={0} variant="h4">
         {HOW_TO_PLAY}
       </Typography>
@@ -34,13 +34,14 @@ const GameRules = () => {
         sx={{
           width: '70%',
           display: 'block',
+          padding: '0',
           margin: 'auto',
         }}
       >
         <Stepper activeStep={currentRuleId}>
           {rules.map((_item, index) => (
             <Step key={index} onClick={() => manualStep(index)}>
-              <StepLabel>{''}</StepLabel>
+              <StepLabel style={{ cursor: 'pointer' }}>{''}</StepLabel>
             </Step>
           ))}
         </Stepper>

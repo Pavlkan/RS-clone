@@ -42,7 +42,7 @@ const ConstrolsAudio = () => {
           playAudio('click');
         }}
       >
-        {status ? <VolumeUpRoundedIcon /> : <VolumeOffRoundedIcon />}
+        {status ? <VolumeUpRoundedIcon style={{ fontSize: 50 }} /> : <VolumeOffRoundedIcon style={{ fontSize: 50 }} />}
       </IconButton>
     </>
   );

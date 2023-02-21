@@ -17,7 +17,7 @@ const Rule: React.FC<RuleProps> = ({ ruleId }) => {
         sx={{
           fill: theme.palette.text.primary,
           stroke: theme.palette.text.primary,
-          width: '70%',
+          width: '40%',
           height: '70%',
           display: 'block',
           margin: 'auto',
@@ -28,7 +28,7 @@ const Rule: React.FC<RuleProps> = ({ ruleId }) => {
       <Typography variant="h5" align={'center'} sx={{ fontWeight: 700 }}>
         {rules[ruleId].title}
       </Typography>
-      <Typography variant="body1" component="p" align={'center'} gutterBottom sx={{ fontSize: 26 }}>
+      <Typography variant="body1" component="p" align={'center'} gutterBottom sx={{ fontSize: '100%' }}>
         {rules[ruleId].description}
       </Typography>
     </Stack>

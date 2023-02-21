@@ -1,16 +1,17 @@
 export const playersContainer = {
-  maxHeight: '55vh',
+  height: '100%',
   padding: '2%',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   border: '1px solid',
   borderRadius: '10px',
+  overflow: 'auto',
 };
 
 export const playersList = {
   width: '100%',
-  overflow: 'auto',
+  height: '1vh',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',

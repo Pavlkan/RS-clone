@@ -80,7 +80,7 @@ export const LobbyPage = () => {
           padding: '2%',
           display: 'grid',
           gridTemplateRows: 'auto 1fr',
-          gridTemplateColumns: '95%',
+          gridTemplateColumns: document.documentElement.clientWidth <= 768 ? '100%' : '80%',
           justifyContent: 'center',
           gap: '10%',
           minHeight: '100vh',
@@ -96,7 +96,6 @@ export const LobbyPage = () => {
             BACK
           </Button>
           <img src={GarticPhone} width="35%" style={{ justifySelf: 'center' }} alt="GarticPhone" />
-          {/* TODO: sound component with onClick */}
           <ConstrolsAudio />
         </Box>
         <Box
@@ -104,13 +103,13 @@ export const LobbyPage = () => {
             display: 'grid',
             gridTemplateColumns: '1fr 2fr',
             gridTemplateRows: '100%',
-            gap: '10%',
+            gap: document.documentElement.clientWidth <= 768 ? '2%' : '10%',
           }}
         >
           <Box>
             <PlayersBox />
           </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} pb={5}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <GameRules />
             {/* {isOwner && <h1>Settings and presets</h1>} */}
             {/* TODO: players options element and player card */}
