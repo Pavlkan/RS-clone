@@ -13,15 +13,20 @@ import { resetUser } from '../store/userSlice';
 import GarticPhone from '../../assets/Garticphone.webp';
 import ConstrolsAudio, { playAudio } from '../components/audio-controls';
 import GameRules from '../components/game-rules/GameRules';
+import AlertDialog from '../components/alert-dialog/AlertDialog';
 
 export const LobbyPage = () => {
   const [shown, setShown] = useState(false);
+  const [openAlertFour, setOpenAlertFour] = React.useState(false);
   const lobby = useSelector(selectLobby);
   const game = useSelector(selectGame);
   const isOwner = useSelector(selectIsOwner);
   const socket = useSocket();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const alertFourTitle = 'Wanna try?';
+  const alertFourContent = 'Hey! The playability is better when there are at least 4 players. Do you really want to continue?';
 
   useEffect(() => {
     if (game.id) {
@@ -38,12 +43,28 @@ export const LobbyPage = () => {
     playAudio('click');
   }, [setShown, lobby]);
 
-  const onStartClick = useCallback(() => {
+  const startGame = useCallback(() => {
+    setOpenAlertFour(true);
     if (isOwner) {
       socket?.emit('game:start');
     }
     playAudio('click');
   }, [socket, isOwner]);
+
+  const responseAlertFourHandle = (resp: boolean) => {
+    setOpenAlertFour(false);
+    if (resp) {
+      startGame();
+    }
+  };
+
+  const onStartClick = () => {
+    if (lobby.players.length >= 4) {
+      startGame();
+    } else {
+      setOpenAlertFour(true);
+    }
+  };
 
   const onBackClick = useCallback(() => {
     dispatch(resetUser(null));
@@ -115,6 +136,7 @@ export const LobbyPage = () => {
         onClose={onSnackbarClose}
         message="Link copied!"
       />
+      <AlertDialog title={alertFourTitle} content={alertFourContent} open={openAlertFour} responseHandler={responseAlertFourHandle} />
     </>
   );
 };
