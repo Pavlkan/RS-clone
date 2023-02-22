@@ -18,6 +18,7 @@ export const playersList = {
 };
 
 export const playersListResults = {
+  padding: '2%',
   width: '100%',
   height: '65vh',
   overflow: 'auto',

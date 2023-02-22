@@ -14,7 +14,7 @@ function setStatusSound(status: boolean) {
   localStorage.setItem('statusSound', `${status}`);
 }
 
-function getStatusSuond() {
+function getStatusSound() {
   const status = localStorage.getItem('statusSound');
   if (status) {
     return JSON.parse(status);
@@ -23,15 +23,15 @@ function getStatusSuond() {
 }
 
 export const playAudio = (str: string) => {
-  if (getStatusSuond() && str in sounds) {
+  if (getStatusSound() && str in sounds) {
     const audio: HTMLAudioElement = sounds[str];
     audio.currentTime = 0;
     audio.play();
   }
 };
 
-const ConstrolsAudio = () => {
-  const [status, setStatus] = useState(getStatusSuond());
+const ControlsAudio = () => {
+  const [status, setStatus] = useState(getStatusSound());
   return (
     <>
       <IconButton
@@ -42,10 +42,10 @@ const ConstrolsAudio = () => {
           playAudio('click');
         }}
       >
-        {status ? <VolumeUpRoundedIcon style={{ fontSize: 50 }} /> : <VolumeOffRoundedIcon style={{ fontSize: 50 }} />}
+        {status ? <VolumeUpRoundedIcon color="secondary" style={{ fontSize: 50 }} /> : <VolumeOffRoundedIcon style={{ fontSize: 50 }} />}
       </IconButton>
     </>
   );
 };
 
-export default ConstrolsAudio;
+export default ControlsAudio;

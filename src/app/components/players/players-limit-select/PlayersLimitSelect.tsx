@@ -32,7 +32,7 @@ export const PlayersLimitSelect = (props: PlayersLimitSelectProps) => {
       <Typography variant="h6" component="div" align="center">
         {PLAYERS_TITLE} {props.minAmountOfPlayers}/{props.currentPlayersLimit}
       </Typography>
-      <FormControl fullWidth style={{ marginBottom: '5%' }}>
+      <FormControl color="secondary" fullWidth style={{ marginBottom: '5%' }}>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"

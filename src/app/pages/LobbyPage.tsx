@@ -5,25 +5,29 @@ import { useNavigate } from 'react-router-dom';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 import LinkIcon from '@mui/icons-material/Link';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { PlayersBox } from '../components/players/players-box/PlayersBox';
 import { selectGame, selectIsOwner, selectLobby } from '../store/selectors';
 import { useSocket } from '../socket/useSocket';
 import { resetUser } from '../store/userSlice';
 import GarticPhone from '../../assets/Garticphone.webp';
-import ConstrolsAudio, { playAudio } from '../components/audio-controls';
+import ControlsAudio, { playAudio } from '../components/audio-controls';
 import GameRules from '../components/game-rules/GameRules';
 import AlertDialog from '../components/alert-dialog/AlertDialog';
+import { lobbyMainContainer, lobbyPageContainer } from './pages-styles/lobby-page-styles';
 
 export const LobbyPage = () => {
-  const [shown, setShown] = useState(false);
-  const [openAlertFour, setOpenAlertFour] = React.useState(false);
+  const socket = useSocket();
   const lobby = useSelector(selectLobby);
   const game = useSelector(selectGame);
   const isOwner = useSelector(selectIsOwner);
-  const socket = useSocket();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [shown, setShown] = useState(false);
+  const [openAlertFour, setOpenAlertFour] = React.useState(false);
 
   const alertFourTitle = 'Wanna try?';
   const alertFourContent = 'Hey! The playability is better when there are at least 4 players. Do you really want to continue?';
@@ -72,22 +76,14 @@ export const LobbyPage = () => {
     playAudio('click');
   }, [dispatch, navigate]);
 
+  const matches = useMediaQuery('(min-width:768px)');
+
   return (
     <>
-      <Box
-        // TODO: move style to separate file
-        sx={{
-          padding: '2%',
-          display: 'grid',
-          gridTemplateRows: 'auto 1fr',
-          gridTemplateColumns: document.documentElement.clientWidth <= 768 ? '100%' : '80%',
-          justifyContent: 'center',
-          gap: '10%',
-          minHeight: '100vh',
-        }}
-      >
-        <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', alignItems: 'center' }}>
+      <Box sx={{ ...lobbyPageContainer, gridTemplateColumns: matches ? '80%' : '100%', gap: matches ? '10%' : '1%' }}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', alignItems: 'center', marginTop: matches ? '0' : '7%' }}>
           <Button
+            color="secondary"
             sx={{ textDecoration: 'none', justifySelf: 'center' }}
             startIcon={<ArrowBackIosRoundedIcon />}
             variant="contained"
@@ -95,31 +91,27 @@ export const LobbyPage = () => {
           >
             BACK
           </Button>
+
           <img src={GarticPhone} width="35%" style={{ justifySelf: 'center' }} alt="GarticPhone" />
-          <ConstrolsAudio />
+
+          <ControlsAudio />
         </Box>
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 2fr',
-            gridTemplateRows: '100%',
-            gap: document.documentElement.clientWidth <= 768 ? '2%' : '10%',
-          }}
-        >
+
+        <Box sx={{ ...lobbyMainContainer, gap: matches ? '10%' : '2%' }}>
           <Box>
             <PlayersBox />
           </Box>
+
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <GameRules />
-            {/* {isOwner && <h1>Settings and presets</h1>} */}
-            {/* TODO: players options element and player card */}
 
             {isOwner && (
               <Stack direction="row" spacing={2} mt={5}>
-                <Button variant="outlined" startIcon={<LinkIcon />} onClick={onInviteClick}>
+                <Button color="secondary" variant="outlined" startIcon={<LinkIcon />} onClick={onInviteClick}>
                   Invite
                 </Button>
-                <Button variant="contained" startIcon={<PlayArrowRoundedIcon />} onClick={onStartClick}>
+
+                <Button color="secondary" variant="contained" startIcon={<PlayArrowRoundedIcon />} onClick={onStartClick}>
                   Start
                 </Button>
               </Stack>

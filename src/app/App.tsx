@@ -2,12 +2,9 @@ import React from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line import/named
-import { Box, IconButton, PaletteMode } from '@mui/material';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { Box, PaletteMode } from '@mui/material';
 
 import { LandingPage } from './pages/LandingPage';
 import { LobbyPage } from './pages/LobbyPage';
@@ -17,6 +14,7 @@ import { SocketProvider } from './socket/SocketProvider';
 import { selectIsAuth } from './store/selectors';
 import { ProtectedRoute } from './ProtectedRoute';
 import { ResultsPage } from './pages/ResultsPage';
+import ThemeSwitcher from './components/theme-switcher/ThemeSwitcher';
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
@@ -44,7 +42,6 @@ export const App = () => {
   );
 
   const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
-  const matches = useMediaQuery(theme.breakpoints.up('lg'));
   const isAuth = useSelector(selectIsAuth);
   return (
     <ColorModeContext.Provider value={colorMode}>
@@ -54,21 +51,11 @@ export const App = () => {
           sx={{
             width: 'fit-content',
             position: 'absolute',
-            top: matches ? 20 : 3,
-            left: matches ? 20 : 3,
-            bgcolor: 'background.default',
-            color: 'text.primary',
-            border: '1px solid',
-            borderRadius: 2,
-            p: matches ? 1.5 : 0,
-            cursor: 'pointer',
+            top: 3,
+            left: 3,
           }}
-          onClick={colorMode.toggleColorMode}
         >
-          <span>{matches ? `${theme.palette.mode.toUpperCase()} MODE` : ''}</span>
-          <IconButton sx={{ ml: 1 }} color="inherit">
-            {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-          </IconButton>
+          <ThemeSwitcher mode={mode} onClick={colorMode.toggleColorMode}></ThemeSwitcher>
         </Box>
         <BrowserRouter>
           <Routes>

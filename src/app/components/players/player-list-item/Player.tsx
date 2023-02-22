@@ -5,7 +5,7 @@ import StarIcon from '@mui/icons-material/Star';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 
 import { User } from '../../../store/userSlice';
-import { playerListItemStyles } from './styles';
+import { currentPlayerListItemStyles, playerListItemStyles } from './styles';
 import { useSocket } from '../../../socket/useSocket';
 
 interface PlayerProps {
@@ -25,7 +25,7 @@ export const Player = ({ user, isOwnerPlayerItem, isOwner }: PlayerProps) => {
 
   const endIcon = isOwnerPlayerItem ? (
     <IconButton edge="end" disabled>
-      <StarIcon />
+      <StarIcon color="secondary" />
     </IconButton>
   ) : (
     isOwner &&
@@ -39,7 +39,7 @@ export const Player = ({ user, isOwnerPlayerItem, isOwner }: PlayerProps) => {
   return (
     <>
       {(user || isOwner) && (
-        <ListItem sx={playerListItemStyles} secondaryAction={endIcon}>
+        <ListItem sx={isOwnerPlayerItem ? currentPlayerListItemStyles : playerListItemStyles} secondaryAction={endIcon}>
           <ListItemAvatar>
             {(user && <Avatar src={user.avatar} alt={user.avatar} />) || (
               <Avatar>

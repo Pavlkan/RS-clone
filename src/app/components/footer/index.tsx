@@ -11,5 +11,5 @@ export const Footer = () => {
       </Link>
     );
   });
-  return <Box sx={{ margin: '0 auto' }}>{links}</Box>;
+  return <Box sx={{ margin: '0 auto', display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>{links}</Box>;
 };
