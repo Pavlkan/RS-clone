@@ -3,6 +3,7 @@ import { Box, Button, List } from '@mui/material';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 
 import GarticPhone from '../../assets/Garticphone.webp';
 import { resetUser } from '../store/userSlice';
@@ -10,7 +11,7 @@ import { playersContainer, playersListResults } from '../components/players/play
 import { selectGameAlbum, selectLobby } from '../store/selectors';
 import { Player } from '../components/players/player-list-item/Player';
 import { ResultsAlbum } from '../components/results-album/ResultsAlbum';
-import ControlsAudio from '../components/audio-controls';
+import ControlsAudio, { playAudio } from '../components/audio-controls';
 import { resultsMainContainer, resultsPageContainer } from './pages-styles/results-page-styles';
 import useMediaQuery from '@mui/material/useMediaQuery/useMediaQuery';
 
@@ -18,12 +19,13 @@ export const ResultsPage = () => {
   const lobby = useSelector(selectLobby);
   const gameAlbum = useSelector(selectGameAlbum);
 
+  const [currentPlayer, setCurrentPlayer] = useState(0);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [currentPlayer, setCurrentPlayer] = useState(0);
-
   const onBackClick = useCallback(() => {
+    playAudio('click');
     dispatch(resetUser(null));
     navigate('/landing');
   }, [dispatch, navigate]);
@@ -34,6 +36,7 @@ export const ResultsPage = () => {
     <Box sx={{ ...resultsPageContainer, gridTemplateColumns: matches ? '80%' : '100%', gap: matches ? '10%' : '1%' }}>
       <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', alignItems: 'center', marginTop: matches ? '0' : '7%' }}>
         <Button
+          color="secondary"
           sx={{ textDecoration: 'none', justifySelf: 'center' }}
           startIcon={<HomeRoundedIcon />}
           variant="contained"
@@ -59,7 +62,21 @@ export const ResultsPage = () => {
 
         <Box>
           <ResultsAlbum albumIndex={currentPlayer} gameAlbum={gameAlbum} />
-          <button onClick={() => setCurrentPlayer(currentPlayer + 1)}>+1</button>
+
+          <Box sx={{ marginTop: '40px', display: 'flex', justifyContent: 'center' }}>
+            <Button
+              startIcon={<PlayArrowRoundedIcon />}
+              color="secondary"
+              disabled={lobby.players.length - 1 <= currentPlayer}
+              variant="contained"
+              onClick={() => {
+                playAudio('click');
+                setCurrentPlayer(currentPlayer + 1);
+              }}
+            >
+              NEW TURN
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Box>

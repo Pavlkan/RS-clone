@@ -3,9 +3,13 @@ import { Box, Typography, TextField, Button } from '@mui/material';
 import TimelapseRoundedIcon from '@mui/icons-material/TimelapseRounded';
 import PermPhoneMsgRoundedIcon from '@mui/icons-material/PermPhoneMsgRounded';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
 
 import Garticphone from '../../../../assets/Garticphone.webp';
 import { useSocket } from '../../../socket/useSocket';
+import { useSelector } from 'react-redux';
+import { selectGame } from '../../../store/selectors';
+import { playAudio } from '../../audio-controls';
 
 export interface WritingPhaseProps {
   isInitialWrite: boolean;
@@ -15,16 +19,22 @@ export interface WritingPhaseProps {
 
 export const WritingPhase = (props: WritingPhaseProps) => {
   const socket = useSocket();
+  const game = useSelector(selectGame);
   const [phrase, setPhrase] = useState('Wait, not so fast :(');
+  const [phraseConfirmation, setPhraseConfirmation] = useState(false);
   const textFieldLabel = props.isInitialWrite ? 'Your witty sentence' : 'Type your description for this scene here';
 
   const onSubmitPhraseClick = useCallback(() => {
     socket?.emit('game:update-data', props.currentPhase - 1, phrase);
+    playAudio('click');
+    setPhraseConfirmation(true);
   }, [socket, props.currentPhase, phrase]);
 
   useEffect(() => {
     socket?.emit('game:update-data', props.currentPhase - 1, phrase);
   }, [socket, props.currentPhase, phrase]);
+
+  // const matches = useMediaQuery('(min-width:768px)');
 
   return (
     <Box
@@ -62,18 +72,37 @@ export const WritingPhase = (props: WritingPhaseProps) => {
               WRITE A SENTENCE
             </Typography>
           </>
-        )) || <h1>Another player picture</h1>}
+        )) || (
+          <img
+            width={'30%'}
+            style={{ boxShadow: '0px 0px 7px 1px black' }}
+            src={game.rounds[props.currentPhase - 1].data}
+            alt="Another Player picture"
+          />
+        )}
+
         <Box
           sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'start', gap: '3%', WebkitJustifyContent: 'center' }}
         >
           <TextField
+            color="secondary"
             label={textFieldLabel}
             variant="outlined"
-            style={{ width: '50%' }}
-            onChange={event => setPhrase(event.target.value)}
+            size="small"
+            style={{ width: '40%' }}
+            onChange={event => {
+              setPhrase(event.target.value);
+              setPhraseConfirmation(false);
+            }}
           ></TextField>
-          <Button startIcon={<CheckCircleRoundedIcon />} variant="contained" onClick={onSubmitPhraseClick}>
-            DONE
+          <Button
+            style={{ width: '120px' }}
+            color={phraseConfirmation ? 'success' : 'secondary'}
+            startIcon={phraseConfirmation ? <CheckCircleRoundedIcon /> : <BorderColorIcon />}
+            variant="contained"
+            onClick={onSubmitPhraseClick}
+          >
+            {(phraseConfirmation && 'DONE') || 'CONFIRM'}
           </Button>
         </Box>
       </Box>

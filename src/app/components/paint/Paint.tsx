@@ -10,6 +10,9 @@ import { Tools } from './Tools';
 import { borderedItemStyles } from './styles';
 import { useSocket } from '../../socket/useSocket';
 import { initialImage } from './initialImage';
+import { useSelector } from 'react-redux';
+import { selectGame } from '../../store/selectors';
+import { playAudio } from '../audio-controls';
 
 const defaultBrusColor = '#000000';
 const brushSizes = [2, 5, 8, 11, 15];
@@ -17,6 +20,9 @@ const defaultBrushSize = brushSizes[2];
 
 export const Paint = (props: { currentPhase: number }) => {
   const socket = useSocket();
+  const game = useSelector(selectGame);
+  const currentData = game.rounds[props.currentPhase - 1].data;
+
   const [brushColor, setBrashColor] = useState<MuiColorInputValue>(defaultBrusColor);
   const [brushSize, setBrushSize] = useState<number>(defaultBrushSize);
   const [tool, setTool] = useState<string>('brush');
@@ -31,6 +37,7 @@ export const Paint = (props: { currentPhase: number }) => {
 
   const onSubmitPaintClick = React.useCallback(() => {
     socket?.emit('game:update-data', props.currentPhase - 1, canvasData);
+    playAudio('click');
     setChangeTrigger(trigger => trigger + 1);
   }, [socket, props.currentPhase, canvasData]);
 
@@ -43,11 +50,13 @@ export const Paint = (props: { currentPhase: number }) => {
 
   const handleClearCanvas = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    playAudio('click');
     setSlearTrigger(trigger => trigger + 1);
   };
 
   const handleSaveCanvas = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    playAudio('click');
     setSaveTrigger(trigger => trigger + 1);
   };
 
@@ -63,7 +72,8 @@ export const Paint = (props: { currentPhase: number }) => {
     <Box sx={{ width: 1082, height: 698, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <Grid container spacing={1} sx={borderedItemStyles}>
         <Grid item xs={12} m={2} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          Header
+          <h2>HEY, IT IS TIME TO DRAW!</h2>
+          <h1>{currentData}</h1>
         </Grid>
         <Grid item xs={2}>
           <ColorsPalette color={brushColor} onColorChange={onChangeBrashColor} />

@@ -15,6 +15,7 @@ import { selectIsAuth } from './store/selectors';
 import { ProtectedRoute } from './ProtectedRoute';
 import { ResultsPage } from './pages/ResultsPage';
 import ThemeSwitcher from './components/theme-switcher/ThemeSwitcher';
+import { playAudio } from './components/audio-controls';
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
@@ -31,6 +32,7 @@ export const App = () => {
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
+        playAudio('click');
         setMode(() => {
           const nextThemeMode = localStorage.getItem('themeMode') === 'light' ? 'dark' : 'light';
           localStorage.setItem('themeMode', nextThemeMode);

@@ -2,7 +2,7 @@ export const albumContainer = {
   border: '1px solid',
   borderRadius: '10px',
   padding: '3%',
-  height: '100%',
+  height: '85%',
   overflow: 'auto',
 };
 

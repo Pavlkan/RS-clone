@@ -310,7 +310,6 @@ export const Canvas: React.FC<CanvasProps> = ({
   useEffect(() => {
     if (changeTrigger && canvasRef.current) {
       const canvas: HTMLCanvasElement = canvasRef.current;
-      console.log(canvas.toDataURL());
       changeCanvasData(canvas.toDataURL());
     }
   });

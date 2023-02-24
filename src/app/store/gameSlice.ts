@@ -15,7 +15,7 @@ export interface Round {
 }
 
 export interface RoundState extends Round {
-  data?: unknown;
+  data?: string;
 }
 
 export interface GameAlbum {
@@ -44,8 +44,8 @@ export const gameSlice = createSlice<GameState, SliceCaseReducers<GameState>>({
       state.id = action.payload.id;
       state.roundsCount = action.payload.roundsCount;
     },
-    nextRound: (state: GameState, action: PayloadAction<[Round, unknown]>) => {
-      const [round, data]: [Round, unknown] = action.payload;
+    nextRound: (state: GameState, action: PayloadAction<[Round, string]>) => {
+      const [round, data]: [Round, string] = action.payload;
       state.rounds.push({ ...round, data });
     },
     completeGame: (state: GameState) => {

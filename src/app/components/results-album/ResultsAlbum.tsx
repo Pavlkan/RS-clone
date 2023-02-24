@@ -1,11 +1,9 @@
 import React from 'react';
 import { Box, Stack, Paper, Avatar, Typography } from '@mui/material';
 import { albumContainer, album, albumItemLeft, paper, albumItemRight, itemDataRight, itemDataLeft } from './styles';
-// import base64 from 'base-64';
 import { GameAlbum } from '../../store/gameSlice';
 import { useSelector } from 'react-redux';
 import { selectLobby } from '../../store/selectors';
-// import initialPaint from '../../../assets/initial-paint.jpg';
 
 export interface ResultsAlbumProps {
   albumIndex: number;
@@ -26,8 +24,6 @@ export const ResultsAlbum = (props: ResultsAlbumProps) => {
           const playerName = lobby.players.filter(lobbyPlayer => lobbyPlayer.id === player)[0].name;
           const playerAvatar = lobby.players.filter(lobbyPlayer => lobbyPlayer.id === player)[0].avatar;
           const playerPaint = index % 2 === 0 ? null : playerData;
-          console.log(playerPaint);
-          console.log(currentAlbumItem);
           const itemPosition = index % 2 === 0 ? albumItemRight : albumItemLeft;
           const dataPosition = index % 2 === 0 ? itemDataRight : itemDataLeft;
           return (
@@ -47,5 +43,3 @@ export const ResultsAlbum = (props: ResultsAlbumProps) => {
     </Box>
   );
 };
-
-// (playerPaint && <img style={{ width: '30vw' }} src={initialPaint} alt="player's Paint" />)

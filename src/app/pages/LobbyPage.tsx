@@ -64,8 +64,10 @@ export const LobbyPage = () => {
 
   const onStartClick = () => {
     if (lobby.players.length >= 4) {
+      playAudio('click');
       startGame();
     } else {
+      playAudio('alert');
       setOpenAlertFour(true);
     }
   };

@@ -5,6 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { playAudio } from '../audio-controls';
 
 type AlertDialogProps = {
   title: string;
@@ -27,8 +28,21 @@ const AlertDialog: React.FC<AlertDialogProps> = ({ title, content, responseHandl
           <DialogContentText id="alert-dialog-description">{content}</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => responseHandler(false)}>Disagree</Button>
-          <Button onClick={() => responseHandler(true)} autoFocus>
+          <Button
+            onClick={() => {
+              playAudio('click');
+              responseHandler(false);
+            }}
+          >
+            Disagree
+          </Button>
+          <Button
+            onClick={() => {
+              playAudio('click');
+              responseHandler(true);
+            }}
+            autoFocus
+          >
             Agree
           </Button>
         </DialogActions>
