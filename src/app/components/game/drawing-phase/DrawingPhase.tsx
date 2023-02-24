@@ -19,10 +19,10 @@ export const DrawingPhase = (props: DrawingPhaseProps) => {
   return (
     <Box
       sx={{
-        padding: '2%',
+        padding: '2% 2% 0 2%',
         display: 'grid',
         gridTemplateRows: 'auto 1fr',
-        gridTemplateColumns: '90%',
+        gridTemplateColumns: '100%',
         justifyContent: 'center',
         gap: '10%',
         minHeight: '100vh',

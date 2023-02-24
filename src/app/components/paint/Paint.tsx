@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Box, Button, Grid, useTheme } from '@mui/material';
+import { Box, Button, Grid, Typography, useTheme } from '@mui/material';
 import { Canvas } from './Canvas';
 import { ColorsPalette } from './ColorsPalette';
 // eslint-disable-next-line import/named
@@ -69,19 +69,19 @@ export const Paint = (props: { currentPhase: number }) => {
   }, [socket, props.currentPhase, canvasData]);
 
   return (
-    <Box sx={{ width: 1082, height: 698, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <Box sx={{ width: 1082, display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '0 auto' }}>
       <Grid container spacing={1} sx={borderedItemStyles}>
-        <Grid item xs={12} m={2} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <h2>HEY, IT IS TIME TO DRAW!</h2>
-          <h1>{currentData}</h1>
+        <Grid item xs={12} m={2} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0', margin: '0' }}>
+          <Typography>HEY, IT IS TIME TO DRAW!</Typography>
+          <Typography variant="h5">{currentData}</Typography>
         </Grid>
         <Grid item xs={2}>
           <ColorsPalette color={brushColor} onColorChange={onChangeBrashColor} />
         </Grid>
-        <Grid item xs={8}>
+        <Grid style={{ display: 'flex', justifyContent: 'center' }} item xs={8}>
           <Canvas
-            width={708}
-            height={562}
+            width={600}
+            height={500}
             brushColor={brushColor}
             brushSize={brushSize}
             tool={tool}
