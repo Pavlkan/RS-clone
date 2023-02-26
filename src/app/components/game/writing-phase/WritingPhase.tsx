@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { Box, Typography, TextField, Button } from '@mui/material';
-import TimelapseRoundedIcon from '@mui/icons-material/TimelapseRounded';
 import PermPhoneMsgRoundedIcon from '@mui/icons-material/PermPhoneMsgRounded';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
@@ -10,11 +9,13 @@ import { useSocket } from '../../../socket/useSocket';
 import { useSelector } from 'react-redux';
 import { selectGame } from '../../../store/selectors';
 import { playAudio } from '../../audio-controls';
+import TimeProgress from '../../time-progress';
 
 export interface WritingPhaseProps {
   isInitialWrite: boolean;
   phaseAmount: number;
   currentPhase: number;
+  roundTime: number;
 }
 
 export const WritingPhase = (props: WritingPhaseProps) => {
@@ -54,7 +55,7 @@ export const WritingPhase = (props: WritingPhaseProps) => {
         </Typography>
         <img src={Garticphone} width="37%" style={{ justifySelf: 'center' }} alt="Garticphone" />
         {/* TODO: sound component with onClick */}
-        <TimelapseRoundedIcon sx={{ justifySelf: 'center' }} />
+        <TimeProgress timeInMilsec={props.roundTime} />
       </Box>
 
       <Box

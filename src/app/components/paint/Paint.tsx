@@ -13,12 +13,13 @@ import { initialImage } from './initialImage';
 import { useSelector } from 'react-redux';
 import { selectGame } from '../../store/selectors';
 import { playAudio } from '../audio-controls';
+import TimeProgress from '../time-progress';
 
 const defaultBrusColor = '#000000';
 const brushSizes = [2, 5, 8, 11, 15];
 const defaultBrushSize = brushSizes[2];
 
-export const Paint = (props: { currentPhase: number }) => {
+export const Paint = (props: { currentPhase: number; phaseAmount: number; roundTime: number }) => {
   const socket = useSocket();
   const game = useSelector(selectGame);
   const currentData = game.rounds[props.currentPhase - 1].data;
@@ -71,9 +72,21 @@ export const Paint = (props: { currentPhase: number }) => {
   return (
     <Box sx={{ width: 1082, display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '0 auto' }}>
       <Grid container spacing={1} sx={borderedItemStyles}>
-        <Grid item xs={12} m={2} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0', margin: '0' }}>
-          <Typography>HEY, IT IS TIME TO DRAW!</Typography>
-          <Typography variant="h5">{currentData}</Typography>
+        <Grid item xs={12} m={2}>
+          <Grid container direction="row">
+            <Grid item xs={1}>
+              <Typography variant="h5">
+                {props.currentPhase}/{props.phaseAmount}
+              </Typography>
+            </Grid>
+            <Grid item xs={10} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0', margin: '0' }}>
+              <Typography>HEY, IT IS TIME TO DRAW!</Typography>
+              <Typography variant="h5">{currentData}</Typography>
+            </Grid>
+            <Grid item xs={1}>
+              <TimeProgress timeInMilsec={props.roundTime} />
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={2}>
           <ColorsPalette color={brushColor} onColorChange={onChangeBrashColor} />

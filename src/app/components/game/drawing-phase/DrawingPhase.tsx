@@ -7,6 +7,7 @@ export interface DrawingPhaseProps {
   isInitialWrite: boolean;
   phaseAmount: number;
   currentPhase: number;
+  roundTime: number;
 }
 
 export const DrawingPhase = (props: DrawingPhaseProps) => {
@@ -28,7 +29,7 @@ export const DrawingPhase = (props: DrawingPhaseProps) => {
         minHeight: '100vh',
       }}
     >
-      <Paint currentPhase={props.currentPhase}></Paint>
+      <Paint currentPhase={props.currentPhase} roundTime={props.roundTime} phaseAmount={props.phaseAmount}></Paint>
     </Box>
   );
 };

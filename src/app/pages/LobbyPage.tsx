@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Button, Stack, Snackbar } from '@mui/material';
+import { Box, Button, Stack, Snackbar, Tab } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
@@ -16,12 +16,15 @@ import ControlsAudio, { playAudio } from '../components/audio-controls';
 import GameRules from '../components/game-rules/GameRules';
 import AlertDialog from '../components/alert-dialog/AlertDialog';
 import { lobbyMainContainer, lobbyPageContainer } from './pages-styles/lobby-page-styles';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
+import GamePresets from '../components/game-presets/GamePresets';
 
 export const LobbyPage = () => {
   const socket = useSocket();
   const lobby = useSelector(selectLobby);
   const game = useSelector(selectGame);
   const isOwner = useSelector(selectIsOwner);
+  const [tabsValue, setTabsValue] = useState('rules');
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -37,6 +40,10 @@ export const LobbyPage = () => {
       navigate('/game');
     }
   }, [game.id]);
+
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: string) => {
+    setTabsValue(newValue);
+  };
 
   const onSnackbarClose = useCallback(() => setShown(false), [setShown]);
 
@@ -105,7 +112,20 @@ export const LobbyPage = () => {
           </Box>
 
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <GameRules />
+            <TabContext value={tabsValue}>
+              <Box sx={{ border: 1, borderColor: 'divider' }}>
+                <TabList onChange={handleTabChange} aria-label="Game rules/settings tabs" variant={'fullWidth'}>
+                  <Tab value="rules" label="Rules" />
+                  <Tab value="presets" label="Presets" disabled={!isOwner} />
+                </TabList>
+              </Box>
+              <TabPanel value="rules" sx={{ width: '100%', height: '100%' }}>
+                <GameRules />
+              </TabPanel>
+              <TabPanel value="presets" sx={{ width: '100%', height: '100%' }}>
+                <GamePresets />
+              </TabPanel>
+            </TabContext>
 
             {isOwner && (
               <Stack direction="row" spacing={2} mt={5}>
