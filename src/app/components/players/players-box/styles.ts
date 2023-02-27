@@ -6,7 +6,24 @@ export const playersContainer = {
   alignItems: 'center',
   border: '1px solid',
   borderRadius: '10px',
+};
+
+export const playersListContainer = {
+  height: '100%',
+  width: '98%',
   overflow: 'auto',
+  paddingLeft: '7px',
+  paddingRight: '7px',
+
+  '&::-webkit-scrollbar': {
+    width: '5px',
+  },
+  '&::-webkit-scrollbar-track': {
+    background: '#e0e0e3',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    background: '#a3b8c8',
+  },
 };
 
 export const playersList = {
