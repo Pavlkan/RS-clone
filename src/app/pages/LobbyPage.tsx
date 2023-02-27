@@ -43,6 +43,7 @@ export const LobbyPage = () => {
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: string) => {
     setTabsValue(newValue);
+    playAudio('tabs');
   };
 
   const onSnackbarClose = useCallback(() => setShown(false), [setShown]);
