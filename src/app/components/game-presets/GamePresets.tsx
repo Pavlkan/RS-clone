@@ -34,7 +34,7 @@ const GamePresets = () => {
   };
 
   return (
-    <Stack spacing={3} width={'100%'} borderRadius={2} sx={{ border: '1px solid', height: '100%' }}>
+    <Stack spacing={3} width={'100%'} borderRadius={2} sx={{ border: '1px solid', height: '100%' }} pb={5}>
       <Typography align={'center'} mt={2} mb={4} variant="h4">
         {PRESETS}
       </Typography>
