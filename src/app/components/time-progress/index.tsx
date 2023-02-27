@@ -2,19 +2,27 @@ import { CircularProgress, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 
 type TimeProgressProps = {
-  minutes?: number;
+  timeInMilsec?: number;
 };
 
-const TimeProgress: React.FC<TimeProgressProps> = ({ minutes = 1 }) => {
+const TimeProgress: React.FC<TimeProgressProps> = ({ timeInMilsec = 60000 }) => {
   const [progress, setProgress] = useState(0);
   const increment = 5;
   const iterations = 100 / increment;
-  const interval = (minutes * 60 * 1000) / iterations;
+  const interval = timeInMilsec / iterations;
   const theme = useTheme();
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress(prevProgress => (prevProgress >= 100 ? 0 : prevProgress + increment));
+    let timer = setTimeout(function tick() {
+      setProgress(prevProgress => {
+        if (prevProgress >= 100) {
+          clearInterval(timer);
+          return 0;
+        } else {
+          return prevProgress + increment;
+        }
+      });
+      timer = setTimeout(tick, interval);
     }, interval);
 
     return () => {

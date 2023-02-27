@@ -25,9 +25,23 @@ export const GamePage = () => {
   }, [game.isCompleted]);
 
   if (currentRound?.type === 'writing') {
-    return <WritingPhase isInitialWrite={isFirstRound} phaseAmount={game.roundsCount} currentPhase={game.rounds.length} />;
+    return (
+      <WritingPhase
+        isInitialWrite={isFirstRound}
+        phaseAmount={game.roundsCount}
+        currentPhase={game.rounds.length}
+        roundTime={Number(new Date(game.rounds[0].end)) - Number(new Date())}
+      />
+    );
   } else if (currentRound?.type === 'drawing') {
-    return <DrawingPhase isInitialWrite={isFirstRound} phaseAmount={game.roundsCount} currentPhase={game.rounds.length} />;
+    return (
+      <DrawingPhase
+        isInitialWrite={isFirstRound}
+        phaseAmount={game.roundsCount}
+        currentPhase={game.rounds.length}
+        roundTime={Number(new Date(game.rounds[1].end)) - Number(new Date())}
+      />
+    );
   } else {
     return null;
   }
