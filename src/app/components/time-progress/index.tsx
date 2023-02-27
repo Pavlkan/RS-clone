@@ -1,5 +1,6 @@
 import { CircularProgress, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import { playAudio } from '../audio-controls';
 
 type TimeProgressProps = {
   timeInMilsec?: number;
@@ -30,13 +31,17 @@ const TimeProgress: React.FC<TimeProgressProps> = ({ timeInMilsec = 60000 }) => 
     };
   }, []);
   return (
-    <CircularProgress
-      sx={{ color: progress < 80 ? theme.palette.text.primary : theme.palette.warning.light }}
-      variant="determinate"
-      value={progress}
-      thickness={12}
-      size={60}
-    />
+    <>
+      {progress === 80 ? playAudio('timeout') : null}
+      <CircularProgress
+        sx={{ color: progress < 80 ? theme.palette.text.primary : theme.palette.warning.light }}
+        variant="determinate"
+        value={progress}
+        thickness={12}
+        size={60}
+        onChange={() => console.log(54)}
+      />
+    </>
   );
 };
 

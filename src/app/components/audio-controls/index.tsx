@@ -3,6 +3,7 @@ import clickAudio from '../../../assets/click.mp3';
 import flipAudio from '../../../assets/flip.mp3';
 import alertAudio from '../../../assets/alert.mp3';
 import tabsAudio from '../../../assets/tabs.mp3';
+import timeoutAudio from '../../../assets/timeout.mp3';
 import VolumeOffRoundedIcon from '@mui/icons-material/VolumeOffRounded';
 import VolumeUpRoundedIcon from '@mui/icons-material/VolumeUpRounded';
 import { IconButton } from '@mui/material';
@@ -12,6 +13,7 @@ const sounds: { [key: string]: HTMLAudioElement } = {
   flip: new Audio(flipAudio),
   alert: new Audio(alertAudio),
   tabs: new Audio(tabsAudio),
+  timeout: new Audio(timeoutAudio),
 };
 
 function setStatusSound(status: boolean) {
