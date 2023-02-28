@@ -39,7 +39,6 @@ const TimeProgress: React.FC<TimeProgressProps> = ({ timeInMilsec = 60000 }) => 
         value={progress}
         thickness={12}
         size={60}
-        onChange={() => console.log(54)}
       />
     </>
   );

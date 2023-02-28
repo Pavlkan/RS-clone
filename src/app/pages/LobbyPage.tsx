@@ -49,12 +49,10 @@ export const LobbyPage = () => {
   };
 
   const handleWritingRoundTimeChange = (newWritingRoundTime: string) => {
-    console.log(newWritingRoundTime);
     setWritingRoundTime(newWritingRoundTime);
   };
 
   const handleDrawingRoundTimeChange = (newDrawingRoundTime: string) => {
-    console.log(newDrawingRoundTime);
     setDrawingRoundTime(newDrawingRoundTime);
   };
 
