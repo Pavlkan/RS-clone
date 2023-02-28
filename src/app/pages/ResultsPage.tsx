@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 
 import GarticPhone from '../../assets/Garticphone.webp';
-import { resetUser } from '../store/userSlice';
 import { playersContainer, playersListResults } from '../components/players/players-box/styles';
 import { selectGameAlbum, selectLobby } from '../store/selectors';
 import { Player } from '../components/players/player-list-item/Player';
@@ -26,7 +25,7 @@ export const ResultsPage = () => {
 
   const onBackClick = useCallback(() => {
     playAudio('click');
-    dispatch(resetUser(null));
+    dispatch({ type: 'reset' });
     navigate('/landing');
   }, [dispatch, navigate]);
 
