@@ -75,7 +75,7 @@ export const Paint = (props: { currentPhase: number; phaseAmount: number; roundT
         <Grid item xs={12} m={2}>
           <Grid container direction="row">
             <Grid item xs={1}>
-              <Typography variant="h5">
+              <Typography variant="h4">
                 {props.currentPhase}/{props.phaseAmount}
               </Typography>
             </Grid>

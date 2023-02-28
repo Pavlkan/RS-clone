@@ -4,6 +4,15 @@ export const albumContainer = {
   padding: '3%',
   height: '85%',
   overflow: 'auto',
+
+  '&::-webkit-scrollbar': {
+    width: '0.5vw',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    background: 'plum',
+    borderRadius: '10px',
+    transition: 'all 1s',
+  },
 };
 
 export const album = {

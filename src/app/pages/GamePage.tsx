@@ -30,7 +30,7 @@ export const GamePage = () => {
         isInitialWrite={isFirstRound}
         phaseAmount={game.roundsCount}
         currentPhase={game.rounds.length}
-        roundTime={Number(new Date(game.rounds[0].end)) - Number(new Date())}
+        roundTime={Number(new Date(game.rounds[game.rounds.length - 1].end)) - Number(new Date())}
       />
     );
   } else if (currentRound?.type === 'drawing') {
@@ -39,7 +39,7 @@ export const GamePage = () => {
         isInitialWrite={isFirstRound}
         phaseAmount={game.roundsCount}
         currentPhase={game.rounds.length}
-        roundTime={Number(new Date(game.rounds[1].end)) - Number(new Date())}
+        roundTime={Number(new Date(game.rounds[game.rounds.length - 1].end)) - Number(new Date())}
       />
     );
   } else {

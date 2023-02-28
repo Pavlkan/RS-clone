@@ -38,7 +38,6 @@ const GameRules = () => {
           padding: '0',
           margin: 'auto',
         }}
-        pb={5}
       >
         <Stepper activeStep={currentRuleId}>
           {rules.map((_item, index) => (

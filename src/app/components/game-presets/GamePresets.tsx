@@ -16,26 +16,40 @@ const roundDurationOptions = {
   slow: { id: 'slow', time: timeIntervalInMilsec * 3, title: 'Slow' },
 };
 
-const GamePresets = () => {
+interface GamePresetsProps {
+  handleWritingRoundTimeChange: (newTime: string) => void;
+  handleDrawingRoundTimeChange: (newTime: string) => void;
+}
+
+const GamePresets = (props: GamePresetsProps) => {
   const [writingRoundDuration, setWritingRoundDuration] = useState(roundDurationOptions.normal.id);
   const [drawingRoundDuration, setDrawingRoundDuration] = useState(roundDurationOptions.normal.id);
   const [isExpressMode, setIsExpressMode] = useState(false);
 
   const handleChangeWritingRoundDuration = (event: SelectChangeEvent) => {
     setWritingRoundDuration(event.target.value);
+    props.handleWritingRoundTimeChange(event.target.value);
   };
 
   const handleChangeDrawingRoundDuration = (event: SelectChangeEvent) => {
     setDrawingRoundDuration(event.target.value);
+    props.handleDrawingRoundTimeChange(event.target.value);
   };
 
   const handleExpressModeChange = () => {
     setIsExpressMode(!isExpressMode);
+    if (!isExpressMode) {
+      props.handleWritingRoundTimeChange('fast');
+      props.handleDrawingRoundTimeChange('fast');
+    } else {
+      props.handleWritingRoundTimeChange(writingRoundDuration);
+      props.handleDrawingRoundTimeChange(drawingRoundDuration);
+    }
   };
 
   return (
-    <Stack spacing={3} width={'100%'} borderRadius={2} sx={{ border: '1px solid', height: '100%' }} pb={5}>
-      <Typography align={'center'} mt={2} mb={4} variant="h4">
+    <Stack spacing={3} width={'100%'} borderRadius={2} sx={{ border: '1px solid', height: '100%' }}>
+      <Typography align={'center'} mt={2} mb={1} variant="h4">
         {PRESETS}
       </Typography>
       <Grid container spacing={1} justifyContent="space-around">
@@ -103,7 +117,7 @@ const GamePresets = () => {
           <ToggleButton value="check" selected={isExpressMode} sx={{ minWidth: 100 }} onChange={() => handleExpressModeChange()}>
             <ElectricBoltIcon />
             <Typography align={'center'} mt={0} mb={0} variant="h6">
-              {isExpressMode ? 'ON' : 'OFF'}
+              {isExpressMode ? 'OFF' : 'ON'}
             </Typography>
           </ToggleButton>
         </Grid>

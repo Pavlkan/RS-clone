@@ -31,6 +31,8 @@ export const LobbyPage = () => {
 
   const [shown, setShown] = useState(false);
   const [openAlertFour, setOpenAlertFour] = React.useState(false);
+  const [writingRoundTime, setWritingRoundTime] = React.useState('normal');
+  const [drawingRoundTime, setDrawingRoundTime] = React.useState('normal');
 
   const alertFourTitle = 'Wanna try?';
   const alertFourContent = 'Hey! The playability is better when there are at least 4 players. Do you really want to continue?';
@@ -46,6 +48,16 @@ export const LobbyPage = () => {
     playAudio('tabs');
   };
 
+  const handleWritingRoundTimeChange = (newWritingRoundTime: string) => {
+    console.log(newWritingRoundTime);
+    setWritingRoundTime(newWritingRoundTime);
+  };
+
+  const handleDrawingRoundTimeChange = (newDrawingRoundTime: string) => {
+    console.log(newDrawingRoundTime);
+    setDrawingRoundTime(newDrawingRoundTime);
+  };
+
   const onSnackbarClose = useCallback(() => setShown(false), [setShown]);
 
   const onInviteClick = useCallback(() => {
@@ -58,10 +70,10 @@ export const LobbyPage = () => {
   const startGame = useCallback(() => {
     setOpenAlertFour(true);
     if (isOwner) {
-      socket?.emit('game:start');
+      socket?.emit('game:start', { writing: writingRoundTime, drawing: drawingRoundTime });
     }
     playAudio('click');
-  }, [socket, isOwner]);
+  }, [socket, isOwner, writingRoundTime, drawingRoundTime]);
 
   const responseAlertFourHandle = (resp: boolean) => {
     setOpenAlertFour(false);
@@ -116,20 +128,23 @@ export const LobbyPage = () => {
             <TabContext value={tabsValue}>
               <Box sx={{ border: 1, borderColor: 'divider' }}>
                 <TabList onChange={handleTabChange} aria-label="Game rules/settings tabs" variant={'fullWidth'}>
-                  <Tab value="rules" label="Rules" />
+                  <Tab value="rules" label="Rules" disabled={!isOwner} />
                   <Tab value="presets" label="Presets" disabled={!isOwner} />
                 </TabList>
               </Box>
-              <TabPanel value="rules" sx={{ width: '100%', height: '100%' }}>
+              <TabPanel value="rules" sx={{ width: '100%', height: '100%', padding: '24px 0 0 0' }}>
                 <GameRules />
               </TabPanel>
-              <TabPanel value="presets" sx={{ width: '100%', height: '100%' }}>
-                <GamePresets />
+              <TabPanel value="presets" sx={{ width: '100%', height: '100%', padding: '24px 0 0 0' }}>
+                <GamePresets
+                  handleWritingRoundTimeChange={handleWritingRoundTimeChange}
+                  handleDrawingRoundTimeChange={handleDrawingRoundTimeChange}
+                />
               </TabPanel>
             </TabContext>
 
             {isOwner && (
-              <Stack direction="row" spacing={2} mt={5}>
+              <Stack direction="row" spacing={2} mt={'24px'}>
                 <Button color="secondary" variant="outlined" startIcon={<LinkIcon />} onClick={onInviteClick}>
                   Invite
                 </Button>

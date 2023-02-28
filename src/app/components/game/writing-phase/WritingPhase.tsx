@@ -35,8 +35,6 @@ export const WritingPhase = (props: WritingPhaseProps) => {
     socket?.emit('game:update-data', props.currentPhase - 1, phrase);
   }, [socket, props.currentPhase, phrase]);
 
-  // const matches = useMediaQuery('(min-width:768px)');
-
   return (
     <Box
       sx={{
@@ -50,12 +48,13 @@ export const WritingPhase = (props: WritingPhaseProps) => {
       }}
     >
       <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', alignItems: 'center' }}>
-        <Typography variant="h6" component="div" align="center">
+        <Typography variant="h4" component="div" align="center">
           {props.currentPhase}/{props.phaseAmount}
         </Typography>
         <img src={Garticphone} width="37%" style={{ justifySelf: 'center' }} alt="Garticphone" />
-        {/* TODO: sound component with onClick */}
-        <TimeProgress timeInMilsec={props.roundTime} />
+        <Box sx={{ justifySelf: 'center' }}>
+          <TimeProgress timeInMilsec={props.roundTime} />
+        </Box>
       </Box>
 
       <Box

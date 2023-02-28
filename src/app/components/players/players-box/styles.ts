@@ -16,13 +16,11 @@ export const playersListContainer = {
   paddingRight: '7px',
 
   '&::-webkit-scrollbar': {
-    width: '5px',
-  },
-  '&::-webkit-scrollbar-track': {
-    background: '#e0e0e3',
+    width: '0.5vw',
   },
   '&::-webkit-scrollbar-thumb': {
-    background: '#a3b8c8',
+    background: 'plum',
+    borderRadius: '10px',
   },
 };
 
@@ -42,4 +40,12 @@ export const playersListResults = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+
+  '&::-webkit-scrollbar': {
+    width: '0.5vw',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    background: 'plum',
+    borderRadius: '10px',
+  },
 };
