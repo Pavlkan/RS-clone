@@ -3,6 +3,7 @@ import { io, Socket } from 'socket.io-client';
 import { useSelector } from 'react-redux';
 
 import { selectUser } from '../store/selectors';
+import { config } from '../config';
 
 interface SocketProviderProps {
   children: JSX.Element;
@@ -17,7 +18,7 @@ export const SocketProvider = ({ children }: SocketProviderProps) => {
   useEffect(() => {
     if (!user.id) return;
 
-    const instance = io('http://localhost:3001', { query: { userId: user.id } });
+    const instance = io(config.apiUrl, { query: { userId: user.id } });
 
     instance.on('connect', () => {
       setSocket(instance);

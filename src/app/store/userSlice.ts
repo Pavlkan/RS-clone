@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/named
 import { createSlice, createAsyncThunk, SliceCaseReducers } from '@reduxjs/toolkit';
+import { config } from '../config';
 
 export interface User {
   id: string;
@@ -14,7 +15,7 @@ export interface UserState {
 }
 
 export const createUser = createAsyncThunk('user/createUser', async ({ name, avatar }: { name: string; avatar: string }) => {
-  const response = await fetch('http://localhost:3001/api/users', {
+  const response = await fetch(`${config.apiUrl}/api/users`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
