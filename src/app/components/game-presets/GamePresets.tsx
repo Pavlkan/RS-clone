@@ -62,6 +62,7 @@ const GamePresets = (props: GamePresetsProps) => {
         <Grid item xs={4} alignSelf="center">
           <FormControl sx={{ width: '100%' }}>
             <Select
+              data-testid="writing-select"
               value={writingRoundDuration}
               onChange={handleChangeWritingRoundDuration}
               displayEmpty
@@ -89,6 +90,7 @@ const GamePresets = (props: GamePresetsProps) => {
         <Grid item xs={4}>
           <FormControl sx={{ width: '100%' }}>
             <Select
+              data-testid="drawing-select"
               value={drawingRoundDuration}
               onChange={handleChangeDrawingRoundDuration}
               displayEmpty
@@ -116,7 +118,8 @@ const GamePresets = (props: GamePresetsProps) => {
         <Grid item xs={4}>
           <ToggleButton value="check" selected={isExpressMode} sx={{ minWidth: 100 }} onChange={() => handleExpressModeChange()}>
             <ElectricBoltIcon />
-            <Typography align={'center'} mt={0} mb={0} variant="h6">
+
+            <Typography align={'center'} mt={0} mb={0} variant="h6" data-testid="toggle-button-label">
               {isExpressMode ? 'OFF' : 'ON'}
             </Typography>
           </ToggleButton>
