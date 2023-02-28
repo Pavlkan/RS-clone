@@ -116,11 +116,11 @@ const GamePresets = (props: GamePresetsProps) => {
           </Typography>
         </Grid>
         <Grid item xs={4}>
-          <ToggleButton value="check" selected={isExpressMode} sx={{ minWidth: 100 }} onChange={() => handleExpressModeChange()}>
+          <ToggleButton value="check" selected={isExpressMode} sx={{ minWidth: 150 }} onChange={() => handleExpressModeChange()}>
             <ElectricBoltIcon />
 
             <Typography align={'center'} mt={0} mb={0} variant="h6" data-testid="toggle-button-label">
-              {isExpressMode ? 'OFF' : 'ON'}
+              {isExpressMode ? 'set OFF' : 'set ON'}
             </Typography>
           </ToggleButton>
         </Grid>

@@ -10,7 +10,6 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { PlayersBox } from '../components/players/players-box/PlayersBox';
 import { selectGame, selectIsOwner, selectLobby } from '../store/selectors';
 import { useSocket } from '../socket/useSocket';
-import { resetUser } from '../store/userSlice';
 import GarticPhone from '../../assets/Garticphone.webp';
 import ControlsAudio, { playAudio } from '../components/audio-controls';
 import GameRules from '../components/game-rules/GameRules';
@@ -91,7 +90,7 @@ export const LobbyPage = () => {
   };
 
   const onBackClick = useCallback(() => {
-    dispatch(resetUser(null));
+    dispatch({ type: 'reset' });
     navigate('/landing');
     playAudio('click');
   }, [dispatch, navigate]);
