@@ -13,6 +13,7 @@ interface CanvasProps {
   saveTrigger: number;
   changeTrigger: number;
   changeCanvasData: (data: string) => void;
+  setPaintConfirmation: (data: boolean) => void;
 }
 
 type Coordinate = {
@@ -32,6 +33,7 @@ export const Canvas: React.FC<CanvasProps> = ({
   saveTrigger,
   changeTrigger,
   changeCanvasData,
+  setPaintConfirmation,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isPainting, setIsPainting] = useState(false);
@@ -274,6 +276,7 @@ export const Canvas: React.FC<CanvasProps> = ({
             drawTriangle(mouseLocation, newMouseLocation, tool === 'triangle-fill');
           }
         }
+        setPaintConfirmation(false);
       }
     },
     [isPainting, mouseLocation, tool],

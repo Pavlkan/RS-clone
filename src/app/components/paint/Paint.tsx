@@ -14,6 +14,8 @@ import { useSelector } from 'react-redux';
 import { selectGame } from '../../store/selectors';
 import { playAudio } from '../audio-controls';
 import TimeProgress from '../time-progress';
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import PaletteRoundedIcon from '@mui/icons-material/PaletteRounded';
 
 const defaultBrusColor = '#000000';
 const brushSizes = [2, 5, 8, 11, 15];
@@ -31,7 +33,9 @@ export const Paint = (props: { currentPhase: number; phaseAmount: number; roundT
   const [saveTrigger, setSaveTrigger] = useState(0);
   const [changeTrigger, setChangeTrigger] = useState(0);
   const [canvasData, setCanvasData] = useState(initialImage);
+  const [paintConfirmation, setPaintConfirmation] = useState(false);
   const theme = useTheme();
+
   const onChangeBrashColor = (color: MuiColorInputValue) => {
     setBrashColor(color);
   };
@@ -40,6 +44,7 @@ export const Paint = (props: { currentPhase: number; phaseAmount: number; roundT
     socket?.emit('game:update-data', props.currentPhase - 1, canvasData);
     playAudio('click');
     setChangeTrigger(trigger => trigger + 1);
+    setPaintConfirmation(true);
   }, [socket, props.currentPhase, canvasData]);
 
   const onChangeBrashSize = (size: number) => {
@@ -71,10 +76,10 @@ export const Paint = (props: { currentPhase: number; phaseAmount: number; roundT
 
   return (
     <Box sx={{ width: 1082, display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '0 auto' }}>
-      <Grid container spacing={1} sx={borderedItemStyles}>
-        <Grid item xs={12} m={2}>
+      <Grid container spacing={1} sx={{ ...borderedItemStyles, padding: '0 1vw' }}>
+        <Grid item xs={12} m={2} style={{ padding: 0 }}>
           <Grid container direction="row">
-            <Grid item xs={1}>
+            <Grid item xs={1} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <Typography variant="h4">
                 {props.currentPhase}/{props.phaseAmount}
               </Typography>
@@ -83,7 +88,7 @@ export const Paint = (props: { currentPhase: number; phaseAmount: number; roundT
               <Typography>HEY, IT IS TIME TO DRAW!</Typography>
               <Typography variant="h5">{currentData}</Typography>
             </Grid>
-            <Grid item xs={1}>
+            <Grid item xs={1} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <TimeProgress timeInMilsec={props.roundTime} />
             </Grid>
           </Grid>
@@ -91,10 +96,10 @@ export const Paint = (props: { currentPhase: number; phaseAmount: number; roundT
         <Grid item xs={2}>
           <ColorsPalette color={brushColor} onColorChange={onChangeBrashColor} />
         </Grid>
-        <Grid style={{ display: 'flex', justifyContent: 'center' }} item xs={8}>
+        <Grid style={{ display: 'flex', justifyContent: 'center', padding: '0' }} item xs={8}>
           <Canvas
             width={600}
-            height={500}
+            height={480}
             brushColor={brushColor}
             brushSize={brushSize}
             tool={tool}
@@ -102,22 +107,29 @@ export const Paint = (props: { currentPhase: number; phaseAmount: number; roundT
             saveTrigger={saveTrigger}
             changeTrigger={changeTrigger}
             changeCanvasData={handleSendCanvasData}
+            setPaintConfirmation={setPaintConfirmation}
           />
         </Grid>
         <Grid item xs={2} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Tools onToolChange={onToolChange} activeToolId={tool} />
-          <Grid container spacing={0} marginTop={2} direction="row" justifyContent="center" alignItems="center">
+          <Grid container spacing={0.5} marginTop={2} direction="row" justifyContent="center" alignItems="center">
             <Grid item xs={8} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <Button variant="text" onClick={handleClearCanvas} size="large" sx={{ color: theme.palette.text.primary }}>
+              <Button variant="text" onClick={handleClearCanvas} style={{ width: '120px' }} sx={{ color: theme.palette.text.primary }}>
                 Clear
               </Button>
             </Grid>
-            <Grid item xs={8} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <Button variant="text" onClick={handleSaveCanvas} size="large" sx={{ color: theme.palette.text.primary }}>
+            <Grid item xs={8} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+              <Button variant="text" onClick={handleSaveCanvas} style={{ width: '120px' }} sx={{ color: theme.palette.text.primary }}>
                 Save
               </Button>
-              <Button variant="text" onClick={onSubmitPaintClick} size="large" sx={{ color: theme.palette.text.primary }}>
-                Done
+              <Button
+                variant="contained"
+                color={paintConfirmation ? 'success' : 'secondary'}
+                startIcon={paintConfirmation ? <CheckCircleRoundedIcon /> : <PaletteRoundedIcon />}
+                onClick={onSubmitPaintClick}
+                style={{ width: '120px' }}
+              >
+                {(paintConfirmation && 'DONE') || 'CONFIRM'}
               </Button>
             </Grid>
           </Grid>
