@@ -18,7 +18,7 @@ export const SocketProvider = ({ children }: SocketProviderProps) => {
   useEffect(() => {
     if (!user.id) return;
 
-    const instance = io(config.apiUrl, { query: { userId: user.id } });
+    const instance = io(config.apiUrl, { query: { userId: user.id }, transports: ['websocket'] });
 
     instance.on('connect', () => {
       setSocket(instance);
